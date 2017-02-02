@@ -6,6 +6,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
+import { MapsPage } from '../pages/maps/maps';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,7 +25,8 @@ export class MyApp {
     this.pages = [
       { title: 'Beranda', component: TabsPage },
       { title: 'Settings', component: SettingsPage },
-      { title: 'Account', component: AccountPage }
+      { title: 'Account', component: AccountPage },
+      { title: 'Map', component: MapsPage }
     ];
 
   }
