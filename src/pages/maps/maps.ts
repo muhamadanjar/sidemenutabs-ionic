@@ -14,9 +14,10 @@ export class MapsPage {
   map: any;
   mapInitialised: boolean = false;
   apiKey: any;
+  rootURL: any;
  
   constructor(public navCtrl: NavController, public platform: Platform) {
- 
+    
   }
 
   ngAfterViewInit() {
@@ -28,8 +29,9 @@ export class MapsPage {
   }
  
   initializeMap() {
-
+    let markers = [];
     this.platform.ready().then(() => {
+        
         var minZoomLevel = 12;
 
         this.map = new google.maps.Map(document.getElementById('map'), {
@@ -37,7 +39,24 @@ export class MapsPage {
             center: new google.maps.LatLng(38.50, -90.50),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+
+        this.setMarkers(this.map,[]);
     });
+  }
+
+  setMarkers(map,locations){
+        
+        for (var i = 0; i < locations.length; i++){  
+          var title = locations[i]['poi_nama'];
+          var lat = (locations[i]['y']);
+          var long = (locations[i]['x']);
+          
+			    let latlngset = new google.maps.LatLng(lat, long);
+			    let marker = new google.maps.Marker({  
+              map: map, title: title,
+              position: latlngset
+          });
+        }
   }
  
   
