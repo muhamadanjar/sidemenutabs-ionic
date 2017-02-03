@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
- 
+
+import { NavController,Platform } from 'ionic-angular';
+
 declare var google;
  
 @Component({
@@ -14,25 +15,30 @@ export class MapsPage {
   mapInitialised: boolean = false;
   apiKey: any;
  
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public platform: Platform) {
  
+  }
+
+  ngAfterViewInit() {
+    this.initializeMap();
   }
  
   ionViewLoaded(){
-    this.loadMap();
+    this.initializeMap();
   }
  
-  loadMap(){
- 
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
- 
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
- 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
- 
+  initializeMap() {
+
+    this.platform.ready().then(() => {
+        var minZoomLevel = 12;
+
+        this.map = new google.maps.Map(document.getElementById('map'), {
+            zoom: minZoomLevel,
+            center: new google.maps.LatLng(38.50, -90.50),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+    });
   }
+ 
+  
 }
