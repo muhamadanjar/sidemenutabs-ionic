@@ -8,6 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
+import { MapPage } from '../pages/map/map';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MapsPage } from '../pages/maps/maps';
     TabsPage,
     SettingsPage,
     AccountPage,
-    MapsPage
+    MapsPage,
+    MapPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -32,7 +34,8 @@ import { MapsPage } from '../pages/maps/maps';
     TabsPage,
     AccountPage,
     SettingsPage,
-    MapsPage
+    MapsPage,
+    MapPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

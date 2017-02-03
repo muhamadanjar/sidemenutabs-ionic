@@ -1,6 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import {
+ GoogleMap,
+ GoogleMapsEvent,
+ GoogleMapsLatLng,
+ CameraPosition,
+ GoogleMapsMarkerOptions,
+ GoogleMapsMarker
+} from 'ionic-native';
+
 /*
   Generated class for the Home page.
 
