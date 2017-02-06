@@ -3,6 +3,9 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController,Platform } from 'ionic-angular';
 
 declare var google:any;
+declare var map:any;
+var x: number = 5;
+var marker: any;
  
 @Component({
   selector: 'home-map',
@@ -16,6 +19,7 @@ export class MapsPage {
   apiKey: any;
   rootURL: any;
   marker:any;
+  markers:any[];
   
   constructor(public navCtrl: NavController, public platform: Platform) {
     
@@ -30,9 +34,7 @@ export class MapsPage {
   }
  
   initializeMap() {
-    let markers = [];
-    var marker;
-    var map;
+    
     this.platform.ready().then(() => {
       
         var minZoomLevel = 12;
@@ -50,7 +52,6 @@ export class MapsPage {
             animation: google.maps.Animation.DROP,
         });
 
-        markers.push(this.marker);
         marker.setMap(map);
 
         marker.addListener('click', this.toggleBounce);
@@ -58,7 +59,7 @@ export class MapsPage {
   }
 
   toggleBounce() {
-    var marker = this.marker;
+    
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null);
     } else {
