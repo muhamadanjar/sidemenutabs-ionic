@@ -7,13 +7,14 @@ import {
  GoogleMapsLatLng,
  CameraPosition,
  GoogleMapsMarkerOptions,
- GoogleMapsMarker
-
+ GoogleMapsMarker,
+ Geolocation
 } from 'ionic-native';
 
 @Component({
   selector: 'map-page',
-  templateUrl: 'map.html'
+  templateUrl: 'map.html',
+  
 })
 
 export class MapPage {
@@ -29,9 +30,9 @@ export class MapPage {
 
     loadMap(){
 
-		//let location = new GoogleMapsLatLng(-6.319814, 106.117515);
-		/*this.map = new GoogleMap('map', {
-			'backgroundColor': 'white',
+		let location = new GoogleMapsLatLng(-6.452209999,107.040650001);
+		let mapProp2 = {
+            'backgroundColor': 'white',
 			'controls': {
 				'compass': true,
 				'myLocationButton': true,
@@ -50,12 +51,27 @@ export class MapPage {
 				'zoom': 12,
 				'bearing': 50
 			}
-		});*/
+        };
+		let map = new GoogleMap('map', mapProp2);
 
-		let element: HTMLElement = document.getElementById('map');
- 		let map = new GoogleMap(element);
+		//let element: HTMLElement = document.getElementById('map');
+ 		//let map = new GoogleMap(element);
 		
-		map.one(GoogleMapsEvent.MAP_READY).then(() => console.log('Map is ready!'));
+		map.one(GoogleMapsEvent.MAP_READY).then(() => {
+			/*Geolocation.getCurrentPosition().then((resp) => {
+
+				map.animateCamera({
+					target: {lat: 50, lng: 4},
+					zoom: 14,
+					tilt: 60,
+					bearing: 140,
+					duration: 2000
+				}, function () { });
+			});*/
+			console.log('Map is ready!');
+		}
+			
+		);
 		/*this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
 				console.log('Map is ready!');
 		});*/
@@ -76,6 +92,8 @@ export class MapPage {
 		.then((marker: GoogleMapsMarker) => {
 			marker.showInfoWindow();
 		});
+
+		
 	}
 
 	
