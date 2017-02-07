@@ -1,12 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { NavController,Platform } from 'ionic-angular';
+import {Geolocation} from 'ionic-native';
 
 declare var google:any;
 declare var map:any;
+declare var klokantech:any;
 var x: number = 5;
 var marker: any;
- 
+var map:any;
 @Component({
   selector: 'home-map',
   templateUrl: 'maps.html'
@@ -44,7 +46,12 @@ export class MapsPage {
             center: pandeglang,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
+
+        var geolocationDiv = document.createElement('div');
+        var geolocationControl = this.GeolocationControl(geolocationDiv, map);
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
+        var geoloccontrol = new klokantech.GeolocationControl(map, 12);
+        /*var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
         
         marker = new google.maps.Marker({
             position: myLatlng,
@@ -53,8 +60,7 @@ export class MapsPage {
         });
 
         marker.setMap(map);
-
-        marker.addListener('click', this.toggleBounce);
+        marker.addListener('click', this.toggleBounce);*/
     });
   }
 
@@ -65,6 +71,154 @@ export class MapsPage {
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     }
+  }
+
+  GeolocationControl(controlDiv, map) {
+
+      // Set CSS for the control button
+      var controlUI = document.createElement('div');
+      controlUI.style.backgroundColor = '#444';
+      controlUI.style.borderStyle = 'solid';
+      controlUI.style.borderWidth = '1px';
+      controlUI.style.borderColor = 'white';
+      controlUI.style.height = '28px';
+      controlUI.style.marginTop = '5px';
+      controlUI.style.cursor = 'pointer';
+      controlUI.style.textAlign = 'center';
+      controlUI.title = 'Click to center map on your location';
+      controlDiv.appendChild(controlUI);
+
+      // Set CSS for the control text
+      var controlText = document.createElement('div');
+      controlText.style.fontFamily = 'Arial,sans-serif';
+      controlText.style.fontSize = '10px';
+      controlText.style.color = 'white';
+      controlText.style.paddingLeft = '10px';
+      controlText.style.paddingRight = '10px';
+      controlText.style.marginTop = '8px';
+      controlText.innerHTML = 'Center map on your location';
+      controlUI.appendChild(controlText);
+
+      // Setup the click event listeners to geolocate user
+      google.maps.event.addDomListener(controlUI, 'click', this.geolocate);
+  }
+
+  geolocate() {
+      console.log('Berhasil di klik');
+      alert('Berhasil di klik');
+      Geolocation.getCurrentPosition().then((position) => {
+        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        
+        let markerMylocation = new google.maps.Marker({
+            position: latLng,
+            title:"Lokasi saya saat ini!",
+            animation: google.maps.Animation.DROP,
+        });
+        markerMylocation.setMap(map);
+        map.setCenter(latLng);
+        
+      }, (err) => {
+        console.log(err);
+      });
+
+      let watch = Geolocation.watchPosition();
+      watch.subscribe((data) => {
+        // data can be a set of coordinates, or an error (if an error occurred).
+        // data.coords.latitude
+        // data.coords.longitude
+      });
+      
+  }
+
+  addYourLocationButton (map, marker) {
+      let controlDiv = document.createElement('div');
+
+      var firstChild = document.createElement('button');
+      firstChild.style.backgroundColor = '#fff';
+      firstChild.style.border = 'none';
+      firstChild.style.outline = 'none';
+      firstChild.style.width = '28px';
+      firstChild.style.height = '28px';
+      firstChild.style.borderRadius = '2px';
+      firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+      firstChild.style.cursor = 'pointer';
+      firstChild.style.marginRight = '10px';
+      firstChild.style.padding = '0';
+      firstChild.title = 'Your Location';
+      controlDiv.appendChild(firstChild);
+
+      var secondChild = document.createElement('div');
+      secondChild.style.margin = '5px';
+      secondChild.style.width = '18px';
+      secondChild.style.height = '18px';
+      secondChild.style.backgroundImage = 'url(https://maps.gstatic.com/tactile/mylocation/mylocation-sprite-2x.png)';
+      secondChild.style.backgroundSize = '180px 18px';
+      secondChild.style.backgroundPosition = '0 0';
+      secondChild.style.backgroundRepeat = 'no-repeat';
+      firstChild.appendChild(secondChild);
+
+      google.maps.event.addListener(map, 'center_changed', function () {
+          secondChild.style['background-position'] = '0 0';
+      });
+
+      firstChild.addEventListener('click', function () {
+          var imgX = '0',
+              animationInterval = setInterval(function () {
+                  imgX = imgX === '-18' ? '0' : '-18';
+                  secondChild.style['background-position'] = imgX+'px 0';
+              }, 500);
+
+          if(navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                  var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                  map.setCenter(latlng);
+                  clearInterval(animationInterval);
+                  secondChild.style['background-position'] = '-144px 0';
+              });
+          } else {
+              clearInterval(animationInterval);
+              secondChild.style['background-position'] = '0 0';
+          }
+      });
+
+      //controlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+  }
+
+  addMarker(){
+ 
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
+  
+    let content = "<h4>Information!</h4>";          
+  
+    this.addInfoWindow(marker, content);
+  
+  }
+
+  addInfoWindow(marker, content){
+ 
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+  
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+  
+  }
+
+  createButtonGeo(){
+      let script = document.createElement("script");
+      script.id = "locationButton";
+      script.src = 'https://cdn.klokantech.com/maptilerlayer/v1/index.js';
+      
+ 
+      document.head.appendChild(script);
+      
   }
 
   setMarkers(map,locations){

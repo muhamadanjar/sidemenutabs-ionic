@@ -9,6 +9,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
 import { MapPage } from '../pages/map/map';
+import { LoginPage } from '../pages/login/login';
 import { ConnectivityService } from '../providers/connectivity-service';
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ConnectivityService } from '../providers/connectivity-service';
     SettingsPage,
     AccountPage,
     MapsPage,
-    MapPage
+    MapPage,
+    LoginPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -36,7 +38,8 @@ import { ConnectivityService } from '../providers/connectivity-service';
     AccountPage,
     SettingsPage,
     MapsPage,
-    MapPage
+    MapPage,
+    LoginPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},ConnectivityService]
 })

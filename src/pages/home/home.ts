@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 import {
  GoogleMap,
@@ -22,7 +24,17 @@ import {
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  posts: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
+    this.http.get('https://adobe.github.io/Spry/data/json/donuts.js').map(res => res.json()).subscribe(data => {
+        console.log(data);
+        this.posts = data.data.children;
+    },
+    err =>{
+        console.log("Oops!");
+    });
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
