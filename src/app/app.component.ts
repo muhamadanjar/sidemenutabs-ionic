@@ -8,6 +8,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
 import { LoginPage } from '../pages/login/login';
+
  
 
 @Component({

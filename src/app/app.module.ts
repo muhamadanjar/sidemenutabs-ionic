@@ -10,6 +10,7 @@ import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
 import { MapPage } from '../pages/map/map';
 import { LoginPage } from '../pages/login/login';
+
 import { ConnectivityService } from '../providers/connectivity-service';
 
 @NgModule({
@@ -24,6 +25,8 @@ import { ConnectivityService } from '../providers/connectivity-service';
     MapsPage,
     MapPage,
     LoginPage
+
+    
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -40,6 +43,8 @@ import { ConnectivityService } from '../providers/connectivity-service';
     MapsPage,
     MapPage,
     LoginPage
+
+    
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},ConnectivityService]
 })

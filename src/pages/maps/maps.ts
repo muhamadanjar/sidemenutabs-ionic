@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { NavController,Platform } from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
+import {Geolocation,Dialogs} from 'ionic-native';
 
 declare var google:any;
 declare var map:any;
@@ -9,6 +9,8 @@ declare var klokantech:any;
 var x: number = 5;
 var marker: any;
 var map:any;
+var infoWindow:any;
+
 @Component({
   selector: 'home-map',
   templateUrl: 'maps.html'
@@ -51,7 +53,7 @@ export class MapsPage {
         var geolocationControl = this.GeolocationControl(geolocationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
         var geoloccontrol = new klokantech.GeolocationControl(map, 12);
-        /*var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
+        var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
         
         marker = new google.maps.Marker({
             position: myLatlng,
@@ -60,7 +62,7 @@ export class MapsPage {
         });
 
         marker.setMap(map);
-        marker.addListener('click', this.toggleBounce);*/
+        marker.addListener('click', this.toggleBounce);
     });
   }
 
@@ -71,6 +73,7 @@ export class MapsPage {
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     }
+    Dialogs.alert('Information','Info','Close');
   }
 
   GeolocationControl(controlDiv, map) {
@@ -105,6 +108,7 @@ export class MapsPage {
 
   geolocate() {
       console.log('Berhasil di klik');
+      marker.setMap(null);
       alert('Berhasil di klik');
       Geolocation.getCurrentPosition().then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -114,8 +118,12 @@ export class MapsPage {
             title:"Lokasi saya saat ini!",
             animation: google.maps.Animation.DROP,
         });
+        
         markerMylocation.setMap(map);
         map.setCenter(latLng);
+        
+
+        
         
       }, (err) => {
         console.log(err);
@@ -199,14 +207,14 @@ export class MapsPage {
   
   }
 
-  addInfoWindow(marker, content){
- 
-    let infoWindow = new google.maps.InfoWindow({
+  public addInfoWindow(marker, content){
+    
+    infoWindow = new google.maps.InfoWindow({
       content: content
     });
   
     google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
+      infoWindow.open(map, marker);
     });
   
   }

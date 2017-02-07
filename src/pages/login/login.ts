@@ -62,8 +62,6 @@ export class LoginPage {
   loginState: any = "in";
   formState: any = "in";
  
-  constructor(public navCtrl: NavController) {
- 
-  }
+  constructor(public navCtrl: NavController) {}
  
 }

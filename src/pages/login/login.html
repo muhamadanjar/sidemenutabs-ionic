@@ -1,18 +1,19 @@
-
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Login</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <div padding [@flyInBottomFast]="cloudState" id="cloud-layer">    
     <ion-row>
       <ion-col>
-        <img [@flyInBottomSlow]="logoState" src="assets/images/joshuamorony.png" />
+        <img [@flyInBottomSlow]="logoState" src="assets/images/logo.png" />
       </ion-col>
     </ion-row>
  
