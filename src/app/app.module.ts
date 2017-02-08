@@ -11,7 +11,12 @@ import { MapsPage } from '../pages/maps/maps';
 import { MapPage } from '../pages/map/map';
 import { LoginPage } from '../pages/login/login';
 
+import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
+import { ModalContentPage as MapModal } from '../pages/maps/modal';
+
+
 import { ConnectivityService } from '../providers/connectivity-service';
+import { DataFasilitas } from '../providers/fasilitas';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,11 @@ import { ConnectivityService } from '../providers/connectivity-service';
     AccountPage,
     MapsPage,
     MapPage,
-    LoginPage
+    LoginPage,
+
+    ModalBasicPage,
+    ModalContentPage,
+    MapModal
 
     
   ],
@@ -42,10 +51,14 @@ import { ConnectivityService } from '../providers/connectivity-service';
     SettingsPage,
     MapsPage,
     MapPage,
-    LoginPage
+    LoginPage,
+
+    ModalBasicPage,
+    ModalContentPage,
+    MapModal
 
     
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},ConnectivityService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},DataFasilitas]
 })
 export class AppModule {}

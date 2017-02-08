@@ -10,9 +10,18 @@
   <h2>Selamat datang!</h2>
  
   <ion-list>
-    <ion-item *ngFor="let post of posts">
-      <img [src]="post.data.url" />
-    </ion-item>
+    <ion-list-header>
+      Hobbits
+    </ion-list-header>
+    <a ion-item (click)="openModal({charNum: 0})">
+      Gollum
+    </a>
+    <a ion-item (click)="openModal({charNum: 1})">
+      Frodo Baggins
+    </a>
+    <a ion-item (click)="openModal({charNum: 2})">
+      Sam
+    </a>
   </ion-list>
   <button ion-button (click)="showAlert()">Default</button>
 </ion-content>

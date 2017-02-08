@@ -1,27 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
-
-
-@Component({
-  templateUrl: 'template.html'
-})
-export class BasicPage {
-  constructor(public modalCtrl: ModalController) { }
-
-  openModal(characterNum) {
-
-    let modal = this.modalCtrl.create(ModalContentPage, characterNum);
-    modal.present();
-  }
-}
+import { NavController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
 
 @Component({
   template: `
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      Description
+      Info
     </ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">

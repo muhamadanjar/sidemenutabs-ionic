@@ -1,10 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import { NavController,Platform } from 'ionic-angular';
-import {Geolocation,Dialogs} from 'ionic-native';
+import { NavController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
+import { Geolocation} from 'ionic-native';
+import {ModalContentPage} from './modal';
 
 declare var google:any;
-declare var map:any;
+
 declare var klokantech:any;
 var x: number = 5;
 var marker: any;
@@ -23,11 +24,13 @@ export class MapsPage {
   apiKey: any;
   rootURL: any;
   marker:any;
-  markers:any[];
   
-  constructor(public navCtrl: NavController, public platform: Platform) {
-    
+  
+  
+  constructor(public navCtrl: NavController, public platform: Platform,public modalCtrl: ModalController) {
+    infoWindow = ModalController;
   }
+ 
 
   ngAfterViewInit() {
     this.initializeMap();
@@ -38,42 +41,53 @@ export class MapsPage {
   }
  
   initializeMap() {
-    
+    /*let modal = this.modalCtrl.create(ModalContentPage, {charNum:1});
+    modal.present();*/
+    //this.openModal({charNum:0});
+
     this.platform.ready().then(() => {
-      
+        
         var minZoomLevel = 12;
-        var pandeglang = new google.maps.LatLng(-6.3252738,106.0764884);
+        var pandeglangPoint = new google.maps.LatLng(-6.3252738,106.0764884);
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: minZoomLevel,
-            center: pandeglang,
+            center: pandeglangPoint,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
         var geolocationDiv = document.createElement('div');
         var geolocationControl = this.GeolocationControl(geolocationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
-        var geoloccontrol = new klokantech.GeolocationControl(map, 12);
+        //var geoloccontrol = new klokantech.GeolocationControl(map, 12);
         var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
         
         marker = new google.maps.Marker({
-            position: myLatlng,
+            position: pandeglangPoint,
             title:"Hello World!",
             animation: google.maps.Animation.DROP,
         });
 
         marker.setMap(map);
-        marker.addListener('click', this.toggleBounce);
+        //marker.addListener('click', this.toggleBounce(this.modalCtrl));
+        marker.addListener('click',()=>{
+          //this.modalCtrl.create(ModalContentPage, {charNum:2}).present();
+          this.openModal({charNum:3});
+          //this.toggleBounce(this.modalCtrl);
+        });
+        
     });
   }
 
-  toggleBounce() {
-    
+  toggleBounce(modal) {
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null);
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     }
-    Dialogs.alert('Information','Info','Close');
+    this.openModal({charNum:0});
+    console.log(modal);
+    
+   
   }
 
   GeolocationControl(controlDiv, map) {
@@ -107,9 +121,8 @@ export class MapsPage {
   }
 
   geolocate() {
-      console.log('Berhasil di klik');
+      
       marker.setMap(null);
-      alert('Berhasil di klik');
       Geolocation.getCurrentPosition().then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         
@@ -121,10 +134,12 @@ export class MapsPage {
         
         markerMylocation.setMap(map);
         map.setCenter(latLng);
+        /*google.maps.event.addDomListener(markerMylocation, 'click', () =>{
+
+        });*/
+        
         
 
-        
-        
       }, (err) => {
         console.log(err);
       });
@@ -243,6 +258,14 @@ export class MapsPage {
           });
         }
   }
+
+  openModal(characterNum) {
+
+    let modal = this.modalCtrl.create(ModalContentPage, characterNum);
+    modal.present();
+  }
  
   
 }
+
+
