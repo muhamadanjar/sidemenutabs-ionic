@@ -44,8 +44,8 @@ export class DataFasilitas {
     return response;
   }
 
-  searchMembers(name) {
-    var url = 'http://nipc.esy.es/nip/backend/index.php?r=members/searchmembers&name='+name ;
+  searchMembers(search) {
+    var url = 'http://localhost:8000/api/searchfasilitas/'+search ;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }

@@ -81,6 +81,21 @@ export class HomePage {
     this.loader.present();
   }
 
+  search(event, key){
+      if(event.target.value.length > 0) {
+          this.data.searchMembers(event.target.value).subscribe(
+              data => {
+                  this.fasilitas = data;
+                  console.log(data);
+              },
+              err => {
+                  console.log(err);
+              },
+              () => console.log('Data Search Complete')
+          );
+      }
+  }
+
   
   
   
