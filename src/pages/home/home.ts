@@ -83,7 +83,7 @@ export class HomePage {
 
   search(event, key){
       if(event.target.value.length > 0) {
-          this.data.searchMembers(event.target.value).subscribe(
+          this.data.searchFasilitas(event.target.value).subscribe(
               data => {
                   this.fasilitas = data;
                   console.log(data);

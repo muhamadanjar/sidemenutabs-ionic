@@ -10,42 +10,41 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class DataFasilitas {
-
+  rootUrl;
   constructor(public http: Http) {
     console.log('Hello DataFasilitas Provider');
+    this.rootUrl = 'http://localhost:8000/api';
   }
 
   LoadFasilitas() {
-    var url = 'http://localhost:8000/api/fasilitas';
+    var url = this.rootUrl+'/fasilitas';
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
 
 
-  InsertMember(firstname,lastename,email,mobile,city,state,country,postalcode)
-  {
-      var url = 'http://nipc.esy.es/nip/backend/index.php?r=members/insert&firstname='+firstname+'&lastname='+lastename+'&email='+email+'&mobile='+mobile+'&city='+city+'&state='+state+'&country='+country+'&postalcode='+postalcode;
+  InserFasilitas(firstname,lastename,email,mobile,city,state,country,postalcode){
+    var url = 'http://nipc.esy.es/nip/backend/index.php?r=members/insert&firstname='+firstname+'&lastname='+lastename+'&email='+email+'&mobile='+mobile+'&city='+city+'&state='+state+'&country='+country+'&postalcode='+postalcode;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
 
-  DeleteMember(id)
-  {
-    var url = 'http://nipc.esy.es/nip/backend/index.php?r=members/deletemember&id='+id;
+  DeleteFasilitas(id){
+    var url = this.rootUrl+'/deletefasilitas/'+id;
     var response = this.http.get(url).map(res => res.json());
     return response;
 
   }
 
-  EditMember(id,firstname,lastename,email,mobile,city,state,country,postalcode)
+  EditFasilitas(id,firstname,lastename,email,mobile,city,state,country,postalcode)
   {
     var url = 'http://nipc.esy.es/nip/backend/index.php?r=members/editmembers&firstname='+firstname+'&lastname='+lastename+'&email='+email+'&mobile='+mobile+'&city='+city+'&state='+state+'&country='+country+'&postalcode='+postalcode+'&id='+id;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
 
-  searchMembers(search) {
-    var url = 'http://localhost:8000/api/searchfasilitas/'+search ;
+  searchFasilitas(search) {
+    var url = this.rootUrl+'/searchfasilitas/'+search ;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }

@@ -17,6 +17,7 @@ import { ModalContentPage as MapModal } from '../pages/maps/modal';
 
 import { ConnectivityService } from '../providers/connectivity-service';
 import { DataFasilitas } from '../providers/fasilitas';
+import { Map as MapService } from '../providers/map';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,6 @@ import { DataFasilitas } from '../providers/fasilitas';
 
     
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},DataFasilitas]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},DataFasilitas,MapService]
 })
 export class AppModule {}

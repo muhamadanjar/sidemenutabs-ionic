@@ -2,7 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { NavController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
 import { Geolocation} from 'ionic-native';
-import {ModalContentPage} from './modal';
+import { ModalContentPage } from './modal';
+import { Map } from "../../providers/map";
 
 declare var google:any;
 
@@ -17,7 +18,7 @@ var infoWindow:any;
   templateUrl: 'maps.html'
 })
 export class MapsPage {
- 
+  mapservice: Array<any>;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   mapInitialised: boolean = false;
@@ -27,24 +28,48 @@ export class MapsPage {
   
   
   
-  constructor(public navCtrl: NavController, public platform: Platform,public modalCtrl: ModalController) {
+  constructor(
+    public navCtrl: NavController, public platform: Platform,
+    public modalCtrl: ModalController,
+    public ms:Map
+  ) {
     infoWindow = ModalController;
   }
  
 
   ngAfterViewInit() {
     this.initializeMap();
+    console.log(this.mapservice);
+  }
+
+  LoadFasilitas(){
+      this.ms.LoadMarker().subscribe(
+        data => {
+          this.mapservice = data;
+          console.log(data);
+           
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log('Fasilitas Loaded')
+      );
+      
   }
  
   ionViewLoaded(){
+    
     this.initializeMap();
   }
+
+  
  
   initializeMap() {
     /*let modal = this.modalCtrl.create(ModalContentPage, {charNum:1});
     modal.present();*/
     //this.openModal({charNum:0});
-
+    
+    
     this.platform.ready().then(() => {
         
         var minZoomLevel = 12;
@@ -59,14 +84,15 @@ export class MapsPage {
         var geolocationControl = this.GeolocationControl(geolocationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
         //var geoloccontrol = new klokantech.GeolocationControl(map, 12);
-        var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
+
+        this.LoadFasilitas();
         
+        var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
         marker = new google.maps.Marker({
             position: pandeglangPoint,
             title:"Hello World!",
             animation: google.maps.Animation.DROP,
         });
-
         marker.setMap(map);
         //marker.addListener('click', this.toggleBounce(this.modalCtrl));
         marker.addListener('click',()=>{
