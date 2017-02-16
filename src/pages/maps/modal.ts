@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import { NavController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
+import { Map as MapService } from "../../providers/map";
 
 @Component({
   template: `
@@ -22,65 +23,51 @@ import { NavController, Platform, ModalController, NavParams, ViewController } f
   <ion-list>
       <ion-item>
         <ion-avatar item-left>
-          <img src="{{character.image}}">
+          <img src="/asset/img/">
         </ion-avatar>
-        <h2>{{character.name}}</h2>
-        <p>{{character.quote}}</p>
+        <h2>A</h2>
+        <p>{{firstParam}}</p>
       </ion-item>
 
-      <ion-item *ngFor="let item of character['items']">
-        {{item.title}}
+      <ion-item>
+        {{character.name}}
         <ion-note item-right>
-          {{item.note}}
+          {{character.qoute}}
         </ion-note>
       </ion-item>
+      
+     
+
+      
+
   </ion-list>
 </ion-content>
 `
 })
 export class ModalContentPage {
+  firstParam;
   character;
-
   constructor(
     public platform: Platform,
     public params: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public ms:MapService
   ) {
-    var characters = [
-      {
-        name: 'Gollum',
-        quote: 'Sneaky little hobbitses!',
-        image: 'assets/img/avatar-gollum.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'River Folk' },
-          { title: 'Alter Ego', note: 'Smeagol' }
-        ]
-      },
-      {
-        name: 'Frodo',
-        quote: 'Go back, Sam! I\'m going to Mordor alone!',
-        image: 'assets/img/avatar-frodo.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Weapon', note: 'Sting' }
-        ]
-      },
-      {
-        name: 'Samwise Gamgee',
-        quote: 'What we need is a few good taters.',
-        image: 'assets/img/avatar-samwise.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Nickname', note: 'Sam' }
-        ]
-      }
-    ];
-    this.character = characters[this.params.get('charNum')];
+
+    this.firstParam = params.get("num");
+    this.character = params.get("character");
+    /*this.ms.LoadPoi().subscribe(
+        data => {
+          this.characters = data;
+        },
+        err => {
+          console.log(err);
+        },
+    );*/
+
   }
 
+  
   dismiss() {
     this.viewCtrl.dismiss();
   }

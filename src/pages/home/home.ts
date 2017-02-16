@@ -9,7 +9,7 @@ from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {DataFasilitas} from "../../providers/fasilitas";
-
+import {ContactPage} from "../contact/contact";
 
 
 @Component({
@@ -94,6 +94,13 @@ export class HomePage {
               () => console.log('Data Search Complete')
           );
       }
+  }
+
+  navigatePage(){
+    this.navCtrl.push(ContactPage,{
+            firstPassed: "value 1",
+            secondPassed: "value 2"
+          });
   }
 
   

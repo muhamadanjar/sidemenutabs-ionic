@@ -1,22 +1,28 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Injectable } from '@angular/core';
 
 import { NavController, Platform, ModalController, NavParams, ViewController } from 'ionic-angular';
 import { Geolocation} from 'ionic-native';
 import { ModalContentPage } from './modal';
 import { Map } from "../../providers/map";
+import { Http } from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
 declare var google:any;
 
 declare var klokantech:any;
 var x: number = 5;
 var marker: any;
+let items:any;
 var map:any;
 var infoWindow:any;
+var _poipandeglang:any;
 
+Injectable()
 @Component({
   selector: 'home-map',
   templateUrl: 'maps.html'
 })
+
 export class MapsPage {
   mapservice: Array<any>;
   @ViewChild('map') mapElement: ElementRef;
@@ -25,34 +31,70 @@ export class MapsPage {
   apiKey: any;
   rootURL: any;
   marker:any;
+  public poipandeglang;
   
   
   
   constructor(
     public navCtrl: NavController, public platform: Platform,
     public modalCtrl: ModalController,
-    public ms:Map
+    public ms:Map,
+    public http:Http
+    
   ) {
-    infoWindow = ModalController;
+      
+      
   }
- 
+
 
   ngAfterViewInit() {
     this.initializeMap();
-    console.log(this.mapservice);
+    
   }
 
   LoadFasilitas(){
       this.ms.LoadMarker().subscribe(
         data => {
-          this.mapservice = data;
-          console.log(data);
-           
+          this.mapservice = data;           
         },
         err => {
           console.log(err);
         },
         () => console.log('Fasilitas Loaded')
+      );
+      
+  }
+
+  LoadPoiPandeglang(){
+      this.ms.LoadPoi().subscribe(
+        data => {
+          this.poipandeglang = data;
+          
+          let pandeglangPoint = [];
+          let marker = [];let image = [];
+          for (var j = 0; j < data.length; j++){
+            
+            image[j] = 'assets/maps/woodshed.png';
+            pandeglangPoint[j] = new google.maps.LatLng(data[j].y,data[j].x);
+            marker[j] = new google.maps.Marker({
+                position: pandeglangPoint[j],
+                title: data[j].name,
+                icon: image[j],
+                animation: google.maps.Animation.DROP,
+                
+            });
+            marker[j].setMap(map);
+            marker[j].addListener('click',()=>{  
+              //this.openModal({charNum:0});
+            });
+            
+          }
+          
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log('LoadPoiPandeglang')
       );
       
   }
@@ -62,14 +104,12 @@ export class MapsPage {
     this.initializeMap();
   }
 
-  
+
  
   initializeMap() {
-    /*let modal = this.modalCtrl.create(ModalContentPage, {charNum:1});
-    modal.present();*/
-    //this.openModal({charNum:0});
-    
-    
+
+
+
     this.platform.ready().then(() => {
         
         var minZoomLevel = 12;
@@ -85,21 +125,11 @@ export class MapsPage {
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
         //var geoloccontrol = new klokantech.GeolocationControl(map, 12);
 
-        this.LoadFasilitas();
+        //this.LoadFasilitas();
+        this.LoadPoiPandeglang();
         
-        var myLatlng = new google.maps.LatLng(-6.452209999,107.040650001);
-        marker = new google.maps.Marker({
-            position: pandeglangPoint,
-            title:"Hello World!",
-            animation: google.maps.Animation.DROP,
-        });
-        marker.setMap(map);
-        //marker.addListener('click', this.toggleBounce(this.modalCtrl));
-        marker.addListener('click',()=>{
-          //this.modalCtrl.create(ModalContentPage, {charNum:2}).present();
-          this.openModal({charNum:3});
-          //this.toggleBounce(this.modalCtrl);
-        });
+        
+
         
     });
   }
@@ -110,7 +140,7 @@ export class MapsPage {
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
     }
-    this.openModal({charNum:0});
+    
     console.log(modal);
     
    
@@ -285,9 +315,19 @@ export class MapsPage {
         }
   }
 
-  openModal(characterNum) {
-
-    let modal = this.modalCtrl.create(ModalContentPage, characterNum);
+  openModal() {
+    var characters = 
+      {
+        name: 'Gollum',
+        quote: 'Sneaky little hobbitses!',
+        image: 'assets/img/avatar-gollum.jpg',
+        items: [
+          { title: 'Race', note: 'Hobbit' },
+          { title: 'Culture', note: 'River Folk' },
+          { title: 'Alter Ego', note: 'Smeagol' }
+        ]
+      };
+    let modal = this.modalCtrl.create(ModalContentPage, {num:0,character:characters});
     modal.present();
   }
  

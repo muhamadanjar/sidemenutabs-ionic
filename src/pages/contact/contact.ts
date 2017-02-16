@@ -12,8 +12,12 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'contact.html'
 })
 export class ContactPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  public firstParam:any;
+  public secondParam:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+      this.firstParam = navParams.get("firstPassed");
+      this.secondParam = navParams.get("secondPassed");
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactPage');

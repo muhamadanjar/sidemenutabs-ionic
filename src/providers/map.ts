@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Map {
   rootUrl;
+  poi;
   constructor(public http: Http) {
     console.log('Hello Map Provider');
     this.rootUrl = 'http://localhost:8000/api';
@@ -19,6 +20,13 @@ export class Map {
   LoadMarker() {
     var url = this.rootUrl+'/map/getmarker';
     var response = this.http.get(url).map(res => res.json());
+    return response;
+  }
+
+  LoadPoi() {
+    var url = this.rootUrl+'/poi';
+    var response = this.http.get(url).map(res => res.json());
+    this.poi = response;
     return response;
   }
 
