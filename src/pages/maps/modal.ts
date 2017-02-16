@@ -25,21 +25,14 @@ import { Map as MapService } from "../../providers/map";
         <ion-avatar item-left>
           <img src="/asset/img/">
         </ion-avatar>
-        <h2>A</h2>
-        <p>{{firstParam}}</p>
-      </ion-item>
-
-      <ion-item>
-        {{character.name}}
-        <ion-note item-right>
-          {{character.qoute}}
-        </ion-note>
+        <h2>{{character.name}}</h2>
+        <p>{{character.x}}</p>
+        <p>{{character.y}}</p>
       </ion-item>
       
+
+
      
-
-      
-
   </ion-list>
 </ion-content>
 `

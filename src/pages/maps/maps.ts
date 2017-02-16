@@ -84,8 +84,9 @@ export class MapsPage {
                 
             });
             marker[j].setMap(map);
-            marker[j].addListener('click',()=>{  
-              //this.openModal({charNum:0});
+            marker[j].addListener('click',(e)=>{  
+              console.log(e);
+              this.openModal(2);
             });
             
           }
@@ -315,7 +316,7 @@ export class MapsPage {
         }
   }
 
-  openModal() {
+  openModal(id) {
     var characters = 
       {
         name: 'Gollum',
@@ -327,8 +328,19 @@ export class MapsPage {
           { title: 'Alter Ego', note: 'Smeagol' }
         ]
       };
-    let modal = this.modalCtrl.create(ModalContentPage, {num:0,character:characters});
-    modal.present();
+
+    this.ms.LoadPoi().subscribe(
+        data => {
+          this.poipandeglang = data;
+          let modal = this.modalCtrl.create(ModalContentPage, {num:0,character:data[id]});
+          modal.present();
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log('LoadPoiPandeglang')
+      );
+    
   }
  
   
