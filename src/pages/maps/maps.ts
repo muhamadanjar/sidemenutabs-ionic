@@ -16,6 +16,8 @@ let items:any;
 var map:any;
 var infoWindow:any;
 var _poipandeglang:any;
+var markers: Array<any>;
+var modalMap;
 
 Injectable()
 @Component({
@@ -34,7 +36,8 @@ export class MapsPage {
   public poipandeglang;
   
   
-  
+
+
   constructor(
     public navCtrl: NavController, public platform: Platform,
     public modalCtrl: ModalController,
@@ -43,7 +46,7 @@ export class MapsPage {
     
   ) {
       
-      
+      modalMap = modalCtrl;
   }
 
 
@@ -71,7 +74,8 @@ export class MapsPage {
           this.poipandeglang = data;
           
           let pandeglangPoint = [];
-          let marker = [];let image = [];
+          let marker=[];let image = [];
+          let infowindow = new google.maps.InfoWindow();
           for (var j = 0; j < data.length; j++){
             
             image[j] = 'assets/maps/woodshed.png';
@@ -81,14 +85,36 @@ export class MapsPage {
                 title: data[j].name,
                 icon: image[j],
                 animation: google.maps.Animation.DROP,
-                
+                id:j,
+                store_id: j,
+                data: data[j],
+                html:j,
             });
+            marker[j].metadata = {type: "point", id: j};
             marker[j].setMap(map);
-            marker[j].addListener('click',(e)=>{  
-              console.log(e);
-              this.openModal(2);
-            });
             
+            /*marker[j].addListener('click',(e)=>{    
+              console.log(e);
+              //this.openModal(marker[j].store_id);
+
+            });*/
+
+            google.maps.event.addListener(marker[j], "click", function () {
+                infowindow.setContent(this.store_id.toString());
+                infowindow.open(map, this);
+                let modal = modalMap.create(ModalContentPage, {num:0,character:data[this.store_id]});
+                modal.present();
+                //this.openModal(this.store_id.toString());
+            });
+
+            /*google.maps.event.addListener(marker[j], 'click', (marker, j) => {
+                console.log(marker);
+                //this.openModal(i);
+                
+            });*/
+
+            
+
           }
           
         },
@@ -112,7 +138,7 @@ export class MapsPage {
 
 
     this.platform.ready().then(() => {
-        
+        var infowindow = new google.maps.InfoWindow();
         var minZoomLevel = 12;
         var pandeglangPoint = new google.maps.LatLng(-6.3252738,106.0764884);
         map = new google.maps.Map(document.getElementById('map'), {
@@ -124,10 +150,12 @@ export class MapsPage {
         var geolocationDiv = document.createElement('div');
         var geolocationControl = this.GeolocationControl(geolocationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
-        //var geoloccontrol = new klokantech.GeolocationControl(map, 12);
+        var geoloccontrol = new klokantech.GeolocationControl(map, 12);
 
         //this.LoadFasilitas();
         this.LoadPoiPandeglang();
+
+        
         
         
 

@@ -30,10 +30,10 @@ import { Map as MapService } from "../../providers/map";
         <p>{{character.y}}</p>
       </ion-item>
       
-
-
-     
   </ion-list>
+  <ion-card>
+    <img src="assets/images/pandeglang/{{character.foto}}"/>
+  </ion-card>
 </ion-content>
 `
 })

@@ -14,7 +14,8 @@ export class Map {
   poi;
   constructor(public http: Http) {
     console.log('Hello Map Provider');
-    this.rootUrl = 'http://localhost:8000/api';
+    //this.rootUrl = 'http://localhost:8000/api';
+    this.rootUrl = 'http://localhost/jjapp/public/api';
   }
 
   LoadMarker() {
