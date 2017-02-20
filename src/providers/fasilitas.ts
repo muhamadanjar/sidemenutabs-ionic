@@ -13,7 +13,7 @@ export class DataFasilitas {
   rootUrl;
   constructor(public http: Http) {
     console.log('Hello DataFasilitas Provider');
-    this.rootUrl = 'http://localhost:8000/api';
+    this.rootUrl = 'http://192.168.20.26:8100/jjpan';
   }
 
   LoadFasilitas() {
