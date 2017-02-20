@@ -8,6 +8,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
 import { LoginPage } from '../pages/login/login';
+import { JjPage } from '../pages/jj/jj';
 
  
 
@@ -29,7 +30,8 @@ export class MyApp {
       { title: 'Beranda', component: TabsPage },
       { title: 'Settings', component: SettingsPage },
       { title: 'Account', component: AccountPage },
-      { title: 'Login', component: LoginPage }
+      { title: 'Login', component: LoginPage },
+      { title: 'Jaringan Jalan', component: JjPage }
     ];
 
   }

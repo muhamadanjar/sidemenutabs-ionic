@@ -9,7 +9,11 @@ import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
 import { MapPage } from '../pages/map/map';
+
+
 import { LoginPage } from '../pages/login/login';
+import { JjPage } from '../pages/jj/jj';
+import { JaringanJalanFungsiPage } from '../pages/jj/fungsi';
 
 import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
 import { ModalContentPage as MapModal } from '../pages/maps/modal';
@@ -30,6 +34,9 @@ import { Map as MapService } from '../providers/map';
     AccountPage,
     MapsPage,
     MapPage,
+    
+    JjPage,
+    JaringanJalanFungsiPage,
     LoginPage,
 
     ModalBasicPage,
@@ -53,6 +60,9 @@ import { Map as MapService } from '../providers/map';
     MapsPage,
     MapPage,
     LoginPage,
+
+    JjPage,
+    JaringanJalanFungsiPage,
 
     ModalBasicPage,
     ModalContentPage,
