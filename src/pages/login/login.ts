@@ -1,5 +1,6 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Auth } from '../../providers/auth';
  
 @Component({
   selector: 'page-login',
@@ -62,6 +63,13 @@ export class LoginPage {
   loginState: any = "in";
   formState: any = "in";
  
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public authService: Auth) {}
+
+  logout(){
+ 
+    this.authService.logout();
+    this.navCtrl.setRoot(LoginPage);
+ 
+  }
  
 }

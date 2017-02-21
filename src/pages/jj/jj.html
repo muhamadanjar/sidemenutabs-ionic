@@ -18,20 +18,20 @@
 
 <ion-content padding>
 
-  <button ion-item (click)="goToFungsi()">
-      Fungsi
-  </button>
-  <button ion-item (click)="goToStatus()">
-      Status
-  </button>
+  
+    <ion-card>
 
-    <ion-list>
-      <button ion-item (click)="goToFungsi()">
-        Login
-      </button>
-      <button ion-item (click)="goToStatus()">
-        Signup
-      </button>
-    </ion-list>
+      <ion-card-header>
+        Card Header
+      </ion-card-header>
+
+      <ion-card-content>
+        <button ion-item (click)="goToFungsi()">
+          <ion-icon ios="logo-apple" md="logo-android"></ion-icon>
+            Fungsi
+        </button>
+      </ion-card-content>
+
+    </ion-card>
 
 </ion-content>

@@ -22,8 +22,6 @@ export class DataFasilitas {
     return response;
   }
 
-
-
   InserFasilitas(firstname,lastename,email,mobile,city,state,country,postalcode){
     var url = 'http://nipc.esy.es/nip/backend/index.php?r=members/insert&firstname='+firstname+'&lastname='+lastename+'&email='+email+'&mobile='+mobile+'&city='+city+'&state='+state+'&country='+country+'&postalcode='+postalcode;
     var response = this.http.get(url).map(res => res.json());
