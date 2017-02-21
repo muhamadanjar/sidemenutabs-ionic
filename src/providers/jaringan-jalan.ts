@@ -15,7 +15,7 @@ export class JaringanJalan {
     this.rootUrl = 'http://192.168.20.26:8100/jjpan';
     console.log('Hello JaringanJalan Provider');
   }
-  LoadFasilitas() {
+  LoadJalanFungsi() {
     var url = this.rootUrl+'/jjfungsi';
     var response = this.http.get(url).map(res => res.json());
     return response;
@@ -36,6 +36,11 @@ export class JaringanJalan {
 
   EditFasilitas(id){
     var url = this.rootUrl+'/jjfungsi/edit/'+id;
+    var response = this.http.get(url).map(res => res.json());
+    return response;
+  }
+  searchFungsi(search) {
+    var url = this.rootUrl+'/searchjjfungsi/'+search ;
     var response = this.http.get(url).map(res => res.json());
     return response;
   }

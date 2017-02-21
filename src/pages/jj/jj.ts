@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
-import { JaringanJalanFungsiPage } from './fungsi';
+import { JaringanJalanFungsiListPage } from './fungsiList';
+import { JaringanJalanFungsiTambahPage } from './fungsiTambah';
+import { JaringanJalanFungsiEditPage } from './fungsiEdit';
 
 
 
@@ -22,13 +24,12 @@ export class JjPage {
     console.log('ionViewDidLoad JjPage');
   }
 
+  gotoPage(page){
+    this.navCtrl.push(page);
+  }
   goToFungsi() {
     
-    this.navCtrl.push(JaringanJalanFungsiPage);
-  }
-
-  goToStatus(){
-    this.navCtrl.push(JaringanJalanFungsiPage);
+    this.navCtrl.push(JaringanJalanFungsiListPage);
   }
 
   

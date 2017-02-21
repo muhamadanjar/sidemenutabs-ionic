@@ -1,5 +1,5 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,AlertController, LoadingController,Loading } from 'ionic-angular';
 import { Auth } from '../../providers/auth';
  
 @Component({
@@ -57,19 +57,44 @@ import { Auth } from '../../providers/auth';
   ]
 })
 export class LoginPage {
- 
+  loading: Loading;
   logoState: any = "in";
   cloudState: any = "in";
   loginState: any = "in";
   formState: any = "in";
  
-  constructor(public navCtrl: NavController, public authService: Auth) {}
+  constructor(
+    public navCtrl: NavController, 
+    public authService: Auth,
+    private alertCtrl: AlertController, private loadingCtrl: LoadingController
+    
+  ) {}
 
   logout(){
  
     this.authService.logout();
     this.navCtrl.setRoot(LoginPage);
  
+  }
+
+  showLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+  }
+ 
+  showError(text) {
+    setTimeout(() => {
+      this.loading.dismiss();
+    });
+ 
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present(prompt);
   }
  
 }

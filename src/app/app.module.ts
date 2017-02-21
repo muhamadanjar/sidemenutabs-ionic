@@ -13,7 +13,10 @@ import { MapPage } from '../pages/map/map';
 
 import { LoginPage } from '../pages/login/login';
 import { JjPage } from '../pages/jj/jj';
-import { JaringanJalanFungsiPage } from '../pages/jj/fungsi';
+import { JaringanJalanFungsiListPage,FungsiPage } from '../pages/jj/fungsiList';
+import { JaringanJalanFungsiTambahPage } from '../pages/jj/fungsiTambah';
+import { JaringanJalanFungsiEditPage } from '../pages/jj/fungsiEdit';
+
 
 import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
 import { ModalContentPage as MapModal } from '../pages/maps/modal';
@@ -36,7 +39,12 @@ import { Map as MapService } from '../providers/map';
     MapPage,
     
     JjPage,
-    JaringanJalanFungsiPage,
+
+    JaringanJalanFungsiListPage,
+    JaringanJalanFungsiTambahPage,
+    JaringanJalanFungsiEditPage,
+    FungsiPage,
+    
     LoginPage,
 
     ModalBasicPage,
@@ -62,7 +70,11 @@ import { Map as MapService } from '../providers/map';
     LoginPage,
 
     JjPage,
-    JaringanJalanFungsiPage,
+
+    JaringanJalanFungsiListPage,
+    JaringanJalanFungsiTambahPage,
+    JaringanJalanFungsiEditPage,
+    FungsiPage,
 
     ModalBasicPage,
     ModalContentPage,

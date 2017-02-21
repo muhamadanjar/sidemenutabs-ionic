@@ -57,7 +57,7 @@ import { JaringanJalan } from '../../providers/jaringan-jalan';
   </ion-content>
   `,
 })
-export class JaringanJalanFungsiPage {
+export class JaringanJalanFungsiTambahPage {
   todo = {};
   public data;
   constructor(public navCtrl: NavController, public navParams: NavParams,public http:Http,public jj:JaringanJalan) {
@@ -73,7 +73,7 @@ export class JaringanJalanFungsiPage {
   }
 
   logForm() {
-    console.log(this.todo)
+    console.log(this.data)
   }
 
   goBack() {
@@ -81,7 +81,7 @@ export class JaringanJalanFungsiPage {
   }
 
   submit() {
-        var link = 'http://192.168.20.26:8100/jjpan/jjfungsi';
+        var link = 'http://192.168.20.26:8100/jjpan/jjfungsi/insert';
         let data = JSON.stringify({
           kode_ruas: this.data.kode_ruas,
           nama:this.data.nama,
@@ -90,20 +90,20 @@ export class JaringanJalanFungsiPage {
           status:this.data.status,
           keterangan:this.data.keterangan
         });
-        console.log(data);
-        this.jj.InserFungsi(this.data.kode_ruas,this.data.nama,this.data.panjang,this.data.lebar,this.data.status,this.data.keterangan).subscribe(data => {
-          console.log(data);
-         this.data.response = data;
-        }, error => {
-            console.log("Oooops!");
-        });
-        /*this.http.get(link)
-        .subscribe(data => {
+        
+        /*this.jj.InserFungsi(this.data.kode_ruas,this.data.nama,this.data.panjang,this.data.lebar,this.data.status,this.data.keterangan).subscribe(data => {
           console.log(data);
          this.data.response = data;
         }, error => {
             console.log("Oooops!");
         });*/
+        this.http.post(link,data)
+        .subscribe(data => {
+          console.log(data);
+         this.data.response = data;
+        }, error => {
+            console.log("Oooops!");
+        });
   }
 
 }
