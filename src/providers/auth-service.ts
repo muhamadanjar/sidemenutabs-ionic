@@ -8,6 +8,15 @@ import 'rxjs/add/operator/map';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
+export class User {
+  name: string;
+  email: string;
+ 
+  constructor(name: string, email: string) {
+    this.name = name;
+    this.email = email;
+  }
+}
 @Injectable()
 export class AuthService {
   rootUrl;
@@ -21,5 +30,7 @@ export class AuthService {
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
+
+  
 
 }

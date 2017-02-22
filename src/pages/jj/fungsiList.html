@@ -18,50 +18,32 @@
   <ion-searchbar color="appbase" (input)="search($event, searchKey)">
   </ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let member of fasilitas">
-      <ion-item (click)="Viewperson(member)">
+    <ion-item-sliding *ngFor="let fungsi of fungsis">
+      <ion-item (click)="Viewfungsi(fungsi)">
         <ion-avatar item-left>
           <img src="assets/img/avatar-frodo.jpg">
         </ion-avatar>
-        <h2>{{member.nama}}</h2>
-        <p>{{member.status}}</p>
+        <h2>{{fungsi.nama}}</h2>
+        <p>{{fungsi.status}}</p>
       </ion-item>
       <ion-item-options side="left" >
-        <button ion-button color="primary" (click)="View(member)">
+        <button ion-button color="primary" (click)="View(fungsi)">
           <ion-icon name="eye"></ion-icon>
           View
         </button>
-        <button ion-button color="secondary" (click)="update(member)">
+        <button ion-button color="secondary" (click)="update(fungsi)">
           <ion-icon name="open"></ion-icon>
           Edit
         </button>
       </ion-item-options>
       <ion-item-options side="right">
-        <button ion-button color="danger" (click)="Delete(member.mem_mid)">
+        <button ion-button color="danger" (click)="Delete(fungsi.id)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  
- 
-  <ion-list>
-    <ion-list-header>
-      Hobbits
-    </ion-list-header>
-    <a ion-item (click)="openModal({charNum: 0})">
-      Gollum
-    </a>
-    <a ion-item (click)="openModal({charNum: 1})">
-      Frodo Baggins
-    </a>
-    <a ion-item (click)="openModal({charNum: 2})">
-      Sam
-    </a>
-  </ion-list>
-  <button ion-button (click)="showAlert()">Default</button>
-  <button ion-button (click)="navigatePage()">Navigate</button>
   
   
 </ion-content>

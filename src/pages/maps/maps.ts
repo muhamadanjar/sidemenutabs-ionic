@@ -188,6 +188,7 @@ export class MapsPage {
       controlUI.style.cursor = 'pointer';
       controlUI.style.textAlign = 'center';
       controlUI.title = 'Click to center map on your location';
+      
       controlDiv.appendChild(controlUI);
 
       // Set CSS for the control text
@@ -207,13 +208,14 @@ export class MapsPage {
 
   geolocate() {
       
-      marker.setMap(null);
+      //markerMylocation.setMap(null);
       Geolocation.getCurrentPosition().then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         
         let markerMylocation = new google.maps.Marker({
             position: latLng,
             title:"Lokasi saya saat ini!",
+            icon: 'assets/maps/you-are-here-2.png',
             animation: google.maps.Animation.DROP,
         });
         

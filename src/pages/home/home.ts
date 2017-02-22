@@ -96,6 +96,13 @@ export class HomePage {
       }
   }
 
+  Viewperson(member){
+    this.navCtrl.push(PersonPage,{member:member});
+  }
+  View(member){
+    this.navCtrl.push(PersonPage,{member:member});
+  }
+
   navigatePage(){
     this.navCtrl.push(ContactPage,{
             firstPassed: "value 1",
@@ -104,8 +111,56 @@ export class HomePage {
   }
 
   
+
+}
+
+@Component({
+  selector: 'page-viewfungsi',
+  //templateUrl: 'jj.html',
   
-  
+  template: `
+    <ion-header>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-navbar color="appbase">
+        <ion-title>{{person.name}}</ion-title>
+      </ion-navbar>
+    </ion-header>
+    <ion-content>
+        <ion-card>
+            <img src="assets/icon/avatar04.png"/>
+            <ion-card-content>
+              <ion-card-title>
+                  <h2>{{person.nama}}</h2>
+              </ion-card-title>
+              <ion-list>
+                  <button ion-item>
+                  <ion-icon name="mail" item-left></ion-icon>
+                  {{person.nama_jalan}}
+                  </button>
+
+                  <button ion-item>
+                  <ion-icon name="call" item-left></ion-icon>
+                  {{person.fasilitas}}
+                  </button>
+              </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </ion-content>
+  `,
+})
+
+export class PersonPage {
+  person;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.person = navParams.data.member;
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad PersonPage');
+  }
 
 }
 

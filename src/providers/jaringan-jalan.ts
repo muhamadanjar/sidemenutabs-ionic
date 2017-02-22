@@ -27,14 +27,14 @@ export class JaringanJalan {
     return response;
   }
 
-  DeleteFasilitas(id){
+  DeleteFungsi(id){
     var url = this.rootUrl+'/jjfungsi/delete/'+id;
     var response = this.http.get(url).map(res => res.json());
     return response;
 
   }
 
-  EditFasilitas(id){
+  EditFungsi(id){
     var url = this.rootUrl+'/jjfungsi/edit/'+id;
     var response = this.http.get(url).map(res => res.json());
     return response;
