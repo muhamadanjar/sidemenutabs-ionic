@@ -1,9 +1,7 @@
 import { Component,ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController,Nav } from 'ionic-angular';
 import { JaringanJalanFungsiListPage } from './fungsiList';
-
-
-
+import { JaringanJalanFungsiMapTambahPage } from './fungsiMapAdd';
 
 @Component({
   selector: 'page-jaringanjalan',
@@ -30,6 +28,9 @@ export class JjPage {
     
     this.navCtrl.push(JaringanJalanFungsiListPage);
   }
+   goToMapAdd(){
+     this.navCtrl.push(JaringanJalanFungsiMapTambahPage);
+   }
 
   
 

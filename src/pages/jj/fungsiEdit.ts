@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 import {JaringanJalanFungsiListPage} from './fungsiList';

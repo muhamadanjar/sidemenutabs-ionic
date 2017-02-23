@@ -4,7 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 import { HomePage } from '../home/home';
-import {JaringanJalanFungsiListPage} from './fungsiList';
+import { JaringanJalanFungsiListPage } from './fungsiList';
 
 @Component({
   selector: 'page-jjFungsiTambah',
@@ -42,7 +42,7 @@ export class JaringanJalanFungsiTambahPage {
 
   submit() {
     this.presentLoading();
-        var link = 'http://192.168.20.26:8100/jjpan/jjfungsi/insert';
+        
         let data = JSON.stringify({
           kode_ruas: this.data.kode_ruas,
           nama:this.data.nama,

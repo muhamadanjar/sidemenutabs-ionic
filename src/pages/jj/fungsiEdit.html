@@ -6,7 +6,7 @@
   <ion-content class="home" padding>
   <ion-list no-lines>
     <form (ngSubmit)="Update(id.value)">
-        <ion-input type="hidden" name="id" value="{{ fungsi.id }}" #id></ion-input>
+      <ion-input type="hidden" name="id" disabled="true" value="{{ fungsi.id }}" #id></ion-input>
       <ion-item>
         <ion-label>Kode Ruas</ion-label>
         <ion-input type="text" [(ngModel)]="data.kode_ruas" name="kode_ruas" value="{{ fungsi.kode_ruas }}"></ion-input>

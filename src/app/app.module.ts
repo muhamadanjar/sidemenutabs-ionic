@@ -8,14 +8,16 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
 import { MapsPage } from '../pages/maps/maps';
-import { MapPage } from '../pages/map/map';
+
 
 
 import { LoginPage } from '../pages/login/login';
+
 import { JjPage } from '../pages/jj/jj';
 import { JaringanJalanFungsiListPage,FungsiPage } from '../pages/jj/fungsiList';
 import { JaringanJalanFungsiTambahPage } from '../pages/jj/fungsiTambah';
 import { JaringanJalanFungsiEditPage } from '../pages/jj/fungsiEdit';
+import { JaringanJalanFungsiMapTambahPage } from '../pages/jj/fungsiMapAdd';
 
 
 import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
@@ -38,7 +40,7 @@ import { Map as MapService } from '../providers/map';
     SettingsPage,
     AccountPage,
     MapsPage,
-    MapPage,
+    
     
     JjPage,
 
@@ -46,6 +48,7 @@ import { Map as MapService } from '../providers/map';
     JaringanJalanFungsiTambahPage,
     JaringanJalanFungsiEditPage,
     FungsiPage,
+    JaringanJalanFungsiMapTambahPage,
     
     LoginPage,
 
@@ -70,7 +73,7 @@ import { Map as MapService } from '../providers/map';
     AccountPage,
     SettingsPage,
     MapsPage,
-    MapPage,
+    
     LoginPage,
 
     JjPage,
@@ -79,6 +82,7 @@ import { Map as MapService } from '../providers/map';
     JaringanJalanFungsiTambahPage,
     JaringanJalanFungsiEditPage,
     FungsiPage,
+    JaringanJalanFungsiMapTambahPage,
 
     ModalBasicPage,
     ModalContentPage,
