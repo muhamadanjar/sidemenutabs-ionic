@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
-
+import {JaringanJalanFungsiListPage} from './fungsiList';
 import { HomePage } from '../home/home';
 
 @Component({
@@ -17,6 +17,7 @@ export class JaringanJalanFungsiEditPage {
   results: Array<any>;
   public data;
   loader: any;
+  FungsiList;
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     public http:Http,public jj:JaringanJalan,public loadingCtrl:LoadingController
@@ -25,7 +26,7 @@ export class JaringanJalanFungsiEditPage {
       this.data.response = '';
       this.fungsi = navParams.data.fungsi;
       this.data = this.fungsi;
-      console.log(this.fungsi);
+      this.FungsiList = JaringanJalanFungsiListPage;
   }
 
   Update(id:string){
@@ -43,8 +44,9 @@ export class JaringanJalanFungsiEditPage {
     this.jj.PostEditFungsi(id,data).subscribe(data => {
       this.data = data;
         if(this.data[0].result =="success"){
-          this.navCtrl.pop();
+          this.navCtrl.popToRoot();
         }
+        //this.FungsiList.ngOnInit();
         this.loader.dismiss();
       }, error => {
       console.log("Oooops!");

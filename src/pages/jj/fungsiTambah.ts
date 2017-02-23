@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 import { HomePage } from '../home/home';
+import {JaringanJalanFungsiListPage} from './fungsiList';
 
 @Component({
   selector: 'page-jjFungsiTambah',
@@ -16,6 +17,7 @@ export class JaringanJalanFungsiTambahPage {
   public data;
   results: Array<any>;
   loader: any;
+  FungsiList;
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     public http:Http,public jj:JaringanJalan,
@@ -23,6 +25,7 @@ export class JaringanJalanFungsiTambahPage {
   ) {
         this.data = {};
         this.http = http;
+        this.FungsiList = JaringanJalanFungsiListPage;
   }
   
   ionViewDidLoad() {
@@ -53,9 +56,10 @@ export class JaringanJalanFungsiTambahPage {
           this.results = data;
           console.log(data);
           if(this.results[0].result =="success"){
-            //this.navCtrl.popTo(HomePage);
-            this.goBack();
+            this.navCtrl.popToRoot();
+            //this.goBack();
           }
+          //this.FungsiList.ngOnInit();
           this.loader.dismiss();
          
         }, error => {
