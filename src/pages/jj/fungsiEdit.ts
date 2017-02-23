@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
-import { JaringanJalanFungsiListPage } from './fungsiList';
+
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-jjFungsiEdit',
@@ -15,7 +16,11 @@ export class JaringanJalanFungsiEditPage {
   fungsi;
   results: Array<any>;
   public data;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http:Http,public jj:JaringanJalan) {
+  loader: any;
+  constructor(
+    public navCtrl: NavController, public navParams: NavParams,
+    public http:Http,public jj:JaringanJalan,public loadingCtrl:LoadingController
+  ) {
       this.data = {};
       this.data.response = '';
       this.fungsi = navParams.data.fungsi;
@@ -24,7 +29,8 @@ export class JaringanJalanFungsiEditPage {
   }
 
   Update(id:string){
-
+    this.presentLoading();
+    var link = 'http://192.168.20.26:8100/jjpan/jjfungsi/edit/'+id;
     let data = JSON.stringify({
         id: this.data.id,
         kode_ruas: this.data.kode_ruas,
@@ -34,21 +40,24 @@ export class JaringanJalanFungsiEditPage {
         status:this.data.status,
         keterangan:this.data.keterangan
     });
-    this.jj.EditFungsi(id).subscribe(
-        data => {
-          this.results = data;
-          console.log(data);
-          if(this.results[0].result =="success")
-          {
-            this.navCtrl.popTo(JaringanJalanFungsiListPage);
-          }
-        },
-        err => {
-          console.log(err);
-        },
-        () => console.log('Edit Complete')
-    );
+    this.jj.PostEditFungsi(id,data).subscribe(data => {
+      this.data = data;
+        if(this.data[0].result =="success"){
+          this.navCtrl.pop();
+        }
+        this.loader.dismiss();
+      }, error => {
+      console.log("Oooops!");
+    });
+    
 
+  }
+
+  presentLoading() {
+        this.loader = this.loadingCtrl.create({
+            content: "Loading..."
+        });
+        this.loader.present();
   }
   
   

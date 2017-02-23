@@ -1,13 +1,12 @@
 import { Component,ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController,Nav } from 'ionic-angular';
 import { JaringanJalanFungsiListPage } from './fungsiList';
-import { JaringanJalanFungsiTambahPage } from './fungsiTambah';
-import { JaringanJalanFungsiEditPage } from './fungsiEdit';
+
 
 
 
 @Component({
-  selector: 'page-jj',
+  selector: 'page-jaringanjalan',
   templateUrl: 'jj.html'
 })
 export class JjPage {

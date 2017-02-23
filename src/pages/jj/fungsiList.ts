@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalanFungsiEditPage } from './fungsiEdit';
+import { JaringanJalanFungsiTambahPage } from './fungsiTambah';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 
 @Component({
@@ -60,6 +61,10 @@ export class JaringanJalanFungsiListPage {
     this.navCtrl.push(FungsiPage,{person:member});
   }
 
+  Insert(){
+      this.navCtrl.push(JaringanJalanFungsiTambahPage);
+  }
+
   Refresh(){
       
       this.jj.LoadJalanFungsi().subscribe(
@@ -86,6 +91,7 @@ export class JaringanJalanFungsiListPage {
               this.fungsis = data;
               console.log(data);
               //this.loader.dismiss();
+              this.ngOnInit();
           },
           err => {
               console.log(err);

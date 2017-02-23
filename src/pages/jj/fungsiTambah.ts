@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Http } from '@angular/http';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-jjFungsiTambah',
@@ -13,11 +14,14 @@ import { JaringanJalan } from '../../providers/jaringan-jalan';
 export class JaringanJalanFungsiTambahPage {
   todo = {};
   public data;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http:Http,public jj:JaringanJalan) {
+  results: Array<any>;
+  loader: any;
+  constructor(
+    public navCtrl: NavController, public navParams: NavParams,
+    public http:Http,public jj:JaringanJalan,
+    public loadingCtrl:LoadingController
+  ) {
         this.data = {};
-        this.data.username = '';
-        this.data.response = '';
- 
         this.http = http;
   }
   
@@ -34,6 +38,7 @@ export class JaringanJalanFungsiTambahPage {
   }
 
   submit() {
+    this.presentLoading();
         var link = 'http://192.168.20.26:8100/jjpan/jjfungsi/insert';
         let data = JSON.stringify({
           kode_ruas: this.data.kode_ruas,
@@ -44,19 +49,25 @@ export class JaringanJalanFungsiTambahPage {
           keterangan:this.data.keterangan
         });
         
-        /*this.jj.InserFungsi(this.data.kode_ruas,this.data.nama,this.data.panjang,this.data.lebar,this.data.status,this.data.keterangan).subscribe(data => {
+        this.jj.PostInserFungsi(data).subscribe(data => {
+          this.results = data;
           console.log(data);
-         this.data.response = data;
-        }, error => {
-            console.log("Oooops!");
-        });*/
-        this.http.post(link,data)
-        .subscribe(data => {
-          console.log(data);
-         this.data.response = data;
+          if(this.results[0].result =="success"){
+            //this.navCtrl.popTo(HomePage);
+            this.goBack();
+          }
+          this.loader.dismiss();
+         
         }, error => {
             console.log("Oooops!");
         });
+  }
+
+  presentLoading() {
+        this.loader = this.loadingCtrl.create({
+            content: "Loading..."
+        });
+        this.loader.present();
   }
 
 }

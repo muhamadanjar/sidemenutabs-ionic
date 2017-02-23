@@ -27,6 +27,12 @@ export class JaringanJalan {
     return response;
   }
 
+  PostInserFungsi(data){
+    var url = this.rootUrl+'/jjfungsi/insert';
+    var response = this.http.post(url,data).map(res => res.json());
+    return response;
+  }
+
   DeleteFungsi(id){
     var url = this.rootUrl+'/jjfungsi/delete/'+id;
     var response = this.http.get(url).map(res => res.json());
@@ -37,6 +43,11 @@ export class JaringanJalan {
   EditFungsi(id){
     var url = this.rootUrl+'/jjfungsi/edit/'+id;
     var response = this.http.get(url).map(res => res.json());
+    return response;
+  }
+  PostEditFungsi(id,data){
+    var url = this.rootUrl+'/jjfungsi/edit/'+id;
+    var response = this.http.post(url,data).map(res => res.json());
     return response;
   }
   searchFungsi(search) {
