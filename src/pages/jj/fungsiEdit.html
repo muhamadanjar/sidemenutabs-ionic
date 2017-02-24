@@ -1,8 +1,10 @@
-<ion-navbar *navbar>
+  <ion-header>
+    <ion-navbar color="secondary">
       <ion-title>
-          Edit
+        Fungsi Edit
       </ion-title>
-  </ion-navbar>
+    </ion-navbar>
+  </ion-header>
   <ion-content class="home" padding>
   <ion-list no-lines>
     <form (ngSubmit)="Update(id.value)">
@@ -25,13 +27,16 @@
       </ion-item>
       <ion-item>
         <ion-label>Status</ion-label>
-        <ion-textarea [(ngModel)]="data.status" name="status" value="{{ fungsi.status }}"></ion-textarea>
+        <ion-select [(ngModel)]="data.status">
+          <ion-option value="jalan_kab_kolektor">Jalan Kabupaten/Kolektor</ion-option>
+          <ion-option value="jalan_kab_primer">Jalan Provinsi/Kolektor Primer</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Keterangan</ion-label>
         <ion-textarea [(ngModel)]="data.keterangan" name="keterangan" value="{{ fungsi.keterangan }}"></ion-textarea>
       </ion-item>
-      <button ion-button type="submit" block>Simpan</button>
+      
     </form>
   </ion-list>
   <button ion-button round block (click)="Update(id.value)">Submit to Serve</button>
