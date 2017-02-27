@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { JaringanJalanFungsiEditPage } from './fungsiEdit';
 import { JaringanJalanFungsiTambahPage } from './fungsiTambah';
+import { JaringanJalanFungsiMapEditPage } from './fungsiMapEdit';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 
 @Component({
@@ -58,6 +59,9 @@ export class JaringanJalanFungsiListPage {
   }
   View(member){
     this.navCtrl.push(FungsiPage,{person:member});
+  }
+  viewMap(fungsi){
+    this.navCtrl.push(JaringanJalanFungsiMapEditPage,{fungsi:fungsi});
   }
 
   Insert(){
@@ -135,7 +139,7 @@ export class JaringanJalanFungsiListPage {
       </ion-item>
       <ion-item>
         <ion-icon name="stats" item-left></ion-icon>
-        Lebar
+        Status
         <ion-badge item-right>{{person.status}}</ion-badge>
       </ion-item>
         

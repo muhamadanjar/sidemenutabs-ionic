@@ -71,7 +71,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
  
-        this.http.post('https://192.168.20.26:8100/jjapp/auth/login', JSON.stringify(credentials), {headers: headers})
+        this.http.post('https://192.168.20.8:8100/jjapp/auth/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
  
             let data = res.json();

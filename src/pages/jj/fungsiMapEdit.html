@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>
+      Map Fungsi Edit
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+    <ion-buttons>
+    <button ion-button (click)="start()">
+        Start Edit
+    </button>
+    <button ion-button  (click)="stop()">
+        Stop Edit
+    </button>
+    <button ion-button color="dark" (click)="save(fungsi.id)" end>
+        Save
+    </button>
+    </ion-buttons>
+   
+ 
+  <div #map id="map"></div>
+</ion-content>

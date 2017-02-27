@@ -25,11 +25,12 @@
         <ion-label>Lebar</ion-label>
         <ion-textarea [(ngModel)]="data.lebar" name="lebar" value="{{ fungsi.lebar }}"></ion-textarea>
       </ion-item>
+      
       <ion-item>
         <ion-label>Status</ion-label>
-        <ion-select [(ngModel)]="data.status">
-          <ion-option value="jalan_kab_kolektor">Jalan Kabupaten/Kolektor</ion-option>
-          <ion-option value="jalan_kab_primer">Jalan Provinsi/Kolektor Primer</ion-option>
+        <ion-select [(ngModel)]="data.status" name="status"> 
+          <ion-option value="jalan_kab_kolektor" selected="true">Jalan Kabupaten/Kolektor</ion-option>
+          <ion-option value="jalan_kab_primer" >Jalan Provinsi/Kolektor Primer</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

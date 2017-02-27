@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 export class JaringanJalan {
   rootUrl;
   constructor(public http: Http) {
-    this.rootUrl = 'http://192.168.20.26:8100/jjpan';
+    this.rootUrl = 'http://192.168.20.8:8100/jjpan';
     console.log('Hello JaringanJalan Provider');
   }
   LoadJalanFungsi() {
@@ -47,6 +47,11 @@ export class JaringanJalan {
   }
   PostEditFungsi(id,data){
     var url = this.rootUrl+'/jjfungsi/edit/'+id;
+    var response = this.http.post(url,data).map(res => res.json());
+    return response;
+  }
+  PostEditMapFungsi(id,data){
+    var url = this.rootUrl+'/jjfungsi/editmap/'+id;
     var response = this.http.post(url,data).map(res => res.json());
     return response;
   }
