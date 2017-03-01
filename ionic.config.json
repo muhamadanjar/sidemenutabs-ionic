@@ -10,7 +10,7 @@
     },
     {
       "path": "/jjpan",
-      "proxyUrl": "http://192.168.20.26/api"
+      "proxyUrl": "http://192.168.20.8/api"
     }
   ]
 }

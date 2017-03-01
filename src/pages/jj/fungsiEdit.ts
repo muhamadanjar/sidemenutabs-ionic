@@ -30,7 +30,6 @@ export class JaringanJalanFungsiEditPage {
 
   Update(id:string){
     this.presentLoading();
-    var link = 'http://192.168.20.26:8100/jjpan/jjfungsi/edit/'+id;
     let data = JSON.stringify({
         id: this.data.id,
         kode_ruas: this.data.kode_ruas,

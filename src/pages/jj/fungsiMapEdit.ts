@@ -1,11 +1,12 @@
-import { Component,NgZone } from '@angular/core';
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { Component,ViewChild,ElementRef } from '@angular/core';
+import { NavController, NavParams, Platform, AlertController,PopoverController } from 'ionic-angular';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 import { LocationTracker } from '../../providers/location-tracker';
 declare var google:any;
 var map:any;
 var poly:any;
 var drawingmode = true;
+var flightPath:any;
 @Component({
   selector: 'page-jjFungsiMapEdit',
   templateUrl: 'fungsiMapEdit.html',
@@ -14,6 +15,8 @@ var drawingmode = true;
 })
 
 export class JaringanJalanFungsiMapEditPage {
+@ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
+@ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
 map: any;
 fungsi: any;
 polyStore: any;
@@ -24,14 +27,20 @@ data: any;
     public locationTracker: LocationTracker,
     public platform: Platform,
     public alertCtrl: AlertController,
-    public jj: JaringanJalan
+    public jj: JaringanJalan,
+    private popoverCtrl: PopoverController
   ) {
-    console.log(this.navparams.data.fungsi);
+    this.data = {};
     this.fungsi = this.navparams.data.fungsi;
+    console.log(JSON.parse(this.fungsi.shape_line).b);
+    this.polyStore = JSON.parse(this.fungsi.shape_line).b;
+    
   }
 
   ngAfterViewInit() {
     this.initializeMap();
+    
+
   }
  
   start(){
@@ -44,10 +53,10 @@ data: any;
 
   save(id){
     console.log(poly.getPath());
-    this.data.shape_line = poly.getPath();
+    this.data.shapeline = poly.getPath();
     let data = JSON.stringify({
         id: this.data.id,
-        shape_line:JSON.stringify(this.data.shape_line)
+        shapeline:JSON.stringify(this.data.shapeline)
     });
     this.jj.PostEditMapFungsi(id,data).subscribe(data => {
         this.data = data;
@@ -83,7 +92,10 @@ data: any;
           },
         });
         drawingManager.setMap(map);
+
         this.initPolyline();
+        //this.initLoadData();
+
         map.addListener('click', (e)=>{
             if (poly === undefined) { 
                 let alert = this.alertCtrl.create({
@@ -92,6 +104,7 @@ data: any;
                   buttons: ['OK']
                 });
                 alert.present();
+                this.initPolyline();
             }
             console.log(drawingmode);
             if(drawingmode){
@@ -106,23 +119,47 @@ data: any;
   }
 
   initPolyline(){
+    var polyStore = this.polyStore; 
+    
     poly = new google.maps.Polyline({
+        path: polyStore,
         strokeColor: '#000000',
         strokeOpacity: 1.0,
-        strokeWeight: 3
+        strokeWeight: 3,
+        //editable: true
     });
     poly.setMap(map);
 
   }
+
+  initLoadData(){
+    let data = this.polyStore;
+    var path = poly.getPath();
+    for (var j = 0; j < data.length; j++){
+      console.log(data[j]);
+    }
+  }
   addLatLng(event) {
     var path = poly.getPath();
     path.push(event.latLng);
-    var marker = new google.maps.Marker({
+    /*var marker = new google.maps.Marker({
         position: event.latLng,
         title: '#' + path.getLength(),
         map: map
-    });
+    });*/
   }
+
+  /*presentPopover(ev) {
+
+    let popover = this.popoverCtrl.create(PopoverPage, {
+      contentEle: this.content.nativeElement,
+      textEle: this.text.nativeElement
+    });
+
+    popover.present({
+      ev: ev
+    });
+  }*/
 
 
   }

@@ -3,22 +3,27 @@
     <ion-title>
       Map Fungsi Edit
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="start()">
+        Start Edit
+      </button>
+      <button ion-button  (click)="stop()">
+          Stop Edit
+      </button>
+      <button ion-button color="dark" (click)="save(fungsi.id)" end>
+          Save
+      </button>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
  
 <ion-content>
-    <ion-buttons>
-    <button ion-button (click)="start()">
-        Start Edit
-    </button>
-    <button ion-button  (click)="stop()">
-        Stop Edit
-    </button>
-    <button ion-button color="dark" (click)="save(fungsi.id)" end>
-        Save
-    </button>
-    </ion-buttons>
-   
- 
+    <ion-item>
+      <ion-label floating color="appbase">Shape</ion-label>
+      <ion-input type="hidden" value="{{fungsi.shape_line}}" name="shapeline"  readonly="readonly" #shapeline></ion-input>
+    </ion-item>
   <div #map id="map"></div>
 </ion-content>

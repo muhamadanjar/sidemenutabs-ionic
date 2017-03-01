@@ -27,6 +27,7 @@ import { ModalContentPage as MapModal } from '../pages/maps/modal';
 import { ConnectivityService } from '../providers/connectivity-service';
 import { DataFasilitas } from '../providers/fasilitas';
 import { Map as MapService } from '../providers/map';
+import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jalan';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,6 @@ import { Map as MapService } from '../providers/map';
 
     
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},DataFasilitas,MapService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},DataFasilitas,MapService,JaringanJalanService]
 })
 export class AppModule {}
