@@ -18,6 +18,8 @@ var infoWindow:any;
 var _poipandeglang:any;
 var markers: Array<any>;
 var modalMap;
+var mapMinZoom = 12;
+var mapMaxZoom = 18;
 
 Injectable()
 @Component({
@@ -144,14 +146,29 @@ export class MapsPage {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: minZoomLevel,
             center: pandeglangPoint,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: false,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_CENTER
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            scaleControl: false,
+            streetViewControl: false,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: false
         });
 
         var geolocationDiv = document.createElement('div');
         var geolocationControl = this.GeolocationControl(geolocationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
-        var geoloccontrol = new klokantech.GeolocationControl(map, 12);
-
+        var geoloccontrol = new klokantech.GeolocationControl(map, mapMaxZoom);
+        
         //this.LoadFasilitas();
         this.LoadPoiPandeglang();
 
@@ -221,7 +238,6 @@ export class MapsPage {
         /*google.maps.event.addDomListener(markerMylocation, 'click', () =>{
 
         });*/
-        
         
 
       }, (err) => {

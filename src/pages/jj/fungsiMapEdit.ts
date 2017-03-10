@@ -1,39 +1,43 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { NavController, NavParams, Platform, AlertController,PopoverController } from 'ionic-angular';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
-import { LocationTracker } from '../../providers/location-tracker';
+
+import { PopoverEditing } from './PopoverEditing';
+import { MapShareService } from '../../providers/mapshareservices';
+
 declare var google:any;
 var map:any;
 var poly:any;
-var drawingmode = true;
 var flightPath:any;
 @Component({
   selector: 'page-jjFungsiMapEdit',
   templateUrl: 'fungsiMapEdit.html',
-  providers:[LocationTracker],
+  providers:[MapShareService],
   
 })
 
 export class JaringanJalanFungsiMapEditPage {
-@ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
-@ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
+
 map: any;
 fungsi: any;
 polyStore: any;
+drawingmode: boolean;
 data: any;
   constructor(
     public navCtrl: NavController,
     public navparams: NavParams, 
-    public locationTracker: LocationTracker,
+    
     public platform: Platform,
     public alertCtrl: AlertController,
     public jj: JaringanJalan,
-    private popoverCtrl: PopoverController
+    private popoverCtrl: PopoverController,
+    public mapedit: MapShareService
   ) {
     this.data = {};
     this.fungsi = this.navparams.data.fungsi;
-    console.log(JSON.parse(this.fungsi.shape_line).b);
-    this.polyStore = JSON.parse(this.fungsi.shape_line).b;
+    this.drawingmode = this.mapedit.getdrawing();
+    //console.log(JSON.parse(this.fungsi.shape_line).b);
+    //this.polyStore = JSON.parse(this.fungsi.shape_line).b;
     
   }
 
@@ -43,13 +47,7 @@ data: any;
 
   }
  
-  start(){
-    drawingmode = true;
-  }
- 
-  stop(){
-    drawingmode = false;
-  }
+  
 
   save(id){
     console.log(poly.getPath());
@@ -63,9 +61,8 @@ data: any;
         if(this.data[0].result =="success"){
           this.navCtrl.popToRoot();
         }
-        //this.FungsiList.ngOnInit();
-        //this.loader.dismiss();
-      }, error => {
+
+    }, error => {
       console.log("Oooops!");
     });
   }
@@ -82,17 +79,7 @@ data: any;
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        var drawingManager = new google.maps.drawing.DrawingManager({
-          drawingControl: true,
-          drawingControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER,
-            drawingModes: [
-              google.maps.drawing.OverlayType.POLYLINE,
-            ]
-          },
-        });
-        drawingManager.setMap(map);
-
+       
         this.initPolyline();
         //this.initLoadData();
 
@@ -106,11 +93,11 @@ data: any;
                 alert.present();
                 this.initPolyline();
             }
-            console.log(drawingmode);
-            if(drawingmode){
+            //console.log(drawingmode);
+            if(this.drawingmode){
               this.addLatLng(e);
             }
-            console.log(poly.getPath());
+            //conhisole.log(poly.getPath());
             
         });
         
@@ -119,10 +106,10 @@ data: any;
   }
 
   initPolyline(){
-    var polyStore = this.polyStore; 
+    //var polyStore = this.polyStore; 
     
     poly = new google.maps.Polyline({
-        path: polyStore,
+        //path: polyStore,
         strokeColor: '#000000',
         strokeOpacity: 1.0,
         strokeWeight: 3,
@@ -142,24 +129,19 @@ data: any;
   addLatLng(event) {
     var path = poly.getPath();
     path.push(event.latLng);
-    /*var marker = new google.maps.Marker({
-        position: event.latLng,
-        title: '#' + path.getLength(),
-        map: map
-    });*/
+
   }
 
-  /*presentPopover(ev) {
+  presentPopover(ev) {
 
-    let popover = this.popoverCtrl.create(PopoverPage, {
-      contentEle: this.content.nativeElement,
-      textEle: this.text.nativeElement
+    let popover = this.popoverCtrl.create(PopoverEditing, {
+      data:this.data,
     });
 
     popover.present({
       ev: ev
     });
-  }*/
+  }
 
 
   }

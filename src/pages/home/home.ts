@@ -36,7 +36,7 @@ export class HomePage {
   }
 
   ngOnInit(){
-      this.presentLoading();
+      /*this.presentLoading();
       this.data.LoadFasilitas().subscribe(
         data => {
           this.fasilitas = data;
@@ -47,7 +47,7 @@ export class HomePage {
           console.log(err);
         },
         () => console.log('Movie Search Complete')
-    );
+      );*/
   }
 
   Refresh(){

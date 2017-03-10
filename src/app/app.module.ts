@@ -19,6 +19,7 @@ import { JaringanJalanFungsiTambahPage } from '../pages/jj/fungsiTambah';
 import { JaringanJalanFungsiEditPage } from '../pages/jj/fungsiEdit';
 import { JaringanJalanFungsiMapTambahPage } from '../pages/jj/fungsiMapAdd';
 import { JaringanJalanFungsiMapEditPage} from '../pages/jj/fungsiMapEdit';
+import { PopoverEditing } from '../pages/jj/PopoverEditing';
 
 import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
 import { ModalContentPage as MapModal } from '../pages/maps/modal';
@@ -51,6 +52,9 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
     FungsiPage,
     JaringanJalanFungsiMapTambahPage,
     JaringanJalanFungsiMapEditPage,
+    PopoverEditing,
+
+
     LoginPage,
 
     ModalBasicPage,
@@ -85,6 +89,7 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
     FungsiPage,
     JaringanJalanFungsiMapTambahPage,
     JaringanJalanFungsiMapEditPage,
+    PopoverEditing,
 
     ModalBasicPage,
     ModalContentPage,
