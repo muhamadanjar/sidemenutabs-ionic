@@ -5,9 +5,11 @@ import 'rxjs/add/operator/map';
 export class MapShareService {  
 
     drawingmode: boolean;
+    map: any;
     rootUrl;
     constructor(public http: Http) {
         this.drawingmode = true;
+        this.map = document.getElementById('map');
         this.rootUrl = 'http://192.168.20.8:8100/jjpan';
     }
   
@@ -16,6 +18,13 @@ export class MapShareService {
     }
     getdrawing() {
         return this.drawingmode;   
+    }
+
+    setMap(map) {
+        this.map = map;    
+    }
+    getMap() {
+        return this.map;   
     }
 
     LoadJalanFungsi() {

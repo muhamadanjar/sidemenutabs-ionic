@@ -7,7 +7,7 @@ import { MapShareService } from '../../providers/mapshareservices';
     <ion-list>
       <button ion-item (click)="start()" *ngIf="this.mapEdit.drawingmode" class="disabled">Mulai Edit</button>
       <button ion-item (click)="stop()" *ngIf="this.mapEdit.drawingmode" class="disabled">Berhenti Edit</button>
-      <button ion-item (click)="close()">Simpan</button>
+      <button ion-item (click)="save()">Simpan</button>
     </ion-list>
   `,
   providers:[MapShareService],
@@ -34,13 +34,10 @@ export class PopoverEditing {
     this.mapEdit.setdrawing(false);
     console.log(this.mapEdit.drawingmode);
   }
-  save(id){
-    this.data.shapeline = "";
-    let data = JSON.stringify({
-        id: this.data.id,
-        shapeline:JSON.stringify(this.data.shapeline)
-    });
-    this.mapEdit.PostEditMapFungsi(id,data).subscribe(data => {
+  save(){
+    console.log(this.data);
+    
+    /*this.mapEdit.PostEditMapFungsi(id,data).subscribe(data => {
         this.data = data;
         if(this.data[0].result =="success"){
           
@@ -49,6 +46,6 @@ export class PopoverEditing {
             
     }, error => {
       console.log("Oooops!");
-    });
+    });*/
   }
 }
