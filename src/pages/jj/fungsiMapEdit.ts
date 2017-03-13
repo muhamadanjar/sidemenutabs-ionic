@@ -11,6 +11,7 @@ var map:any;
 var markers = [];
 var path = [];
 var polyline;
+var polylineStore = [];
 var id = "points";
 @Component({
   selector: 'page-jjFungsiMapEdit',
@@ -25,6 +26,7 @@ fungsi;
 txt;
 polylineStore;
 id_jalan:any;
+markers:any[];
   constructor(
     public navCtrl: NavController,
     public navparams: NavParams, 
@@ -71,8 +73,11 @@ id_jalan:any;
         google.maps.event.addListener(map, 'click', function(event) {
             t.addMarker(event.latLng);
             t.displayMarkers();
+            console.log(polylineStore);
+            
+            //polylineStore.push(event.latLng.toJSON());
         });
-     
+        
         
     });
   }
@@ -113,7 +118,7 @@ clearMarkers() {
             markers[i].setMap(null);
         }
         markers = [];
-        this.polylineStore = [];
+        polylineStore = [];
         this.showPolyline();
 }
 
@@ -138,35 +143,37 @@ addMarker(latlng, i=0) {
         google.maps.event.addListener(marker, 'dragend', function(event) {
             //if(this.drawingmode){
 
-                this.showPolyline();
-                this.displayMarkers();
+                parent.showPolyline();
+                parent.displayMarkers();
             //}
         });
         google.maps.event.addListener(marker, 'rightclick', function(event) {
             //if(this.drawingmode){
-                this.removeMarker(marker);
-                this.showPolyline();
-                this.displayMarkers();
+                parent.removeMarker(marker);
+                parent.showPolyline();
+                parent.displayMarkers();
             //}
         });
         google.maps.event.addListener(marker, 'dblclick', function(event) {
             //if(this.drawingmode){
                 var i = this.getMarkerIndex(marker);
-                if (i > 0 && i == this.markers.length - 1) {
+                if (i > 0 && i == markers.length - 1) {
                     i--;
                 }
-                if (i < this.markers.length - 1) {
-                    var lat0 = this.markers[i].getPosition().lat();
-                    var lng0 = this.markers[i].getPosition().lng();
-                    var lat1 = this.markers[i+1].getPosition().lat();
-                    var lng1 = this.markers[i+1].getPosition().lng();
+                if (i < markers.length - 1) {
+                    var lat0 = markers[i].getPosition().lat();
+                    var lng0 = markers[i].getPosition().lng();
+                    var lat1 = markers[i+1].getPosition().lat();
+                    var lng1 = markers[i+1].getPosition().lng();
                     var latlng = new google.maps.LatLng((lat0+lat1)/2, (lng0+lng1)/2);
+                    
                     this.addMarker(latlng, i+1);
                 }
             //}
         });
         if (i == null || i >= markers.length) {
             markers.push(marker);
+            
         } else {
             markers.splice(i, 0, marker);
         }
@@ -184,32 +191,31 @@ removeMarker(marker) {
 
 displayMarkers() {
         this.txt = "";
-        this.polylineStore = [];
+        polylineStore = [];
         //this.datapostgis = "";
         var countjson = markers.length;
             var last_index = countjson - 1;
         for (var i = 0; i < markers.length; i++) {
             var latlng = markers[i].getPosition();
             this.txt += latlng.toUrlValue() + ",\n";
-            this.polylineStore.push(latlng.toJSON());
+            polylineStore.push(latlng.toJSON());
         }
 }
 setMarkers() {
-        var lines = this.txt.split(/\n/);
-        //console.log(lines);
-        this.clearMarkers();
-        for (var i in lines) {
-            var ps = lines[i].split(/,/);
+  var lines = this.txt.split(/\n/);
+  this.clearMarkers();
+  for (var i in lines) {
+  var ps = lines[i].split(/,/);
 
             if (ps.length >= 2) {
                 var latlng = new google.maps.LatLng(ps[0], ps[1]);
                 this.addMarker(latlng);
             }
-        }
-        this.displayMarkers();
-        if (markers.length > 0) {
-            //map.setCenter(this.markers[0].getPosition());
-        }
+  }
+  this.displayMarkers();
+  if (this.markers.length > 0) {
+    map.setCenter(this.markers[0].getPosition());
+  }
 }
 
 ngAfterViewInit() {
