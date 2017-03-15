@@ -1,10 +1,12 @@
-import { Component,ViewChild,ElementRef } from '@angular/core';
+import { Component,ViewChild,ElementRef,NgZone } from '@angular/core';
 import { NavController, NavParams, Platform, AlertController,PopoverController } from 'ionic-angular';
 import { JaringanJalan } from '../../providers/jaringan-jalan';
 
 import { PopoverEditing } from './PopoverEditing';
 import { MapShareService } from '../../providers/mapshareservices';
 import { MapEditorService } from '../../providers/mapeditorservice';
+
+import { Geolocation, Geoposition } from 'ionic-native';
 
 declare var google:any;
 var map:any;
@@ -21,6 +23,10 @@ var id = "points";
 })
 
 export class JaringanJalanFungsiMapEditPage {
+public watch: any;
+public lat: number = 0;
+public lng: number = 0;
+
 drawingmode: boolean;
 fungsi;
 txt;
@@ -33,6 +39,7 @@ markers:any[];
     public platform: Platform,
     private popoverCtrl: PopoverController,
     public mapshareedit: MapShareService,
+    public zone: NgZone
     //public polyedit: MapEditorService
   ) {
     
@@ -70,7 +77,7 @@ markers:any[];
             fullscreenControl: true
         });
         let t = this;
-        google.maps.event.addListener(map, 'click', function(event) {
+        google.maps.event.addListener(map, 'click', (event) => {
             t.addMarker(event.latLng);
             t.displayMarkers();
             console.log(polylineStore);
@@ -139,23 +146,24 @@ addMarker(latlng, i=0) {
             draggable: true,
             icon: host+'images/maps/waterpark.png'
         });
+        console.log(this.drawingmode);      
         let parent = this;
-        google.maps.event.addListener(marker, 'dragend', function(event) {
-            //if(this.drawingmode){
+        google.maps.event.addListener(marker, 'dragend', (event) => {
+            if(this.drawingmode){
 
                 parent.showPolyline();
                 parent.displayMarkers();
-            //}
+            }
         });
-        google.maps.event.addListener(marker, 'rightclick', function(event) {
-            //if(this.drawingmode){
+        google.maps.event.addListener(marker, 'rightclick', (event) => {
+            if(this.drawingmode){
                 parent.removeMarker(marker);
                 parent.showPolyline();
                 parent.displayMarkers();
-            //}
+            }
         });
-        google.maps.event.addListener(marker, 'dblclick', function(event) {
-            //if(this.drawingmode){
+        google.maps.event.addListener(marker, 'dblclick', (event) => {
+            if(this.drawingmode){
                 var i = this.getMarkerIndex(marker);
                 if (i > 0 && i == markers.length - 1) {
                     i--;
@@ -169,7 +177,7 @@ addMarker(latlng, i=0) {
                     
                     this.addMarker(latlng, i+1);
                 }
-            //}
+            }
         });
         if (i == null || i >= markers.length) {
             markers.push(marker);
@@ -223,14 +231,38 @@ ngAfterViewInit() {
 }
 
 presentPopover(ev) {
-    let data = {fungsi:this.fungsi,t:this.txt}
+    let data = {fungsi:this.fungsi,t:this.txt,poly:polylineStore}
     let popover = this.popoverCtrl.create(PopoverEditing, {
-      data:data  
+      data:data
     });
     popover.present({
       ev: ev
     });
 }
+
+
+
+getTitik(){
+    let options = {
+      frequency: 3000, 
+      enableHighAccuracy: true,
+      timeout: 5000,
+    };
+  
+    this.watch = Geolocation.watchPosition(options).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
+  
+      console.log(position);
+      polylineStore.push({lat:position.coords.latitude,lng:position.coords.longitude})
+      // Run update inside of Angular's zone
+      this.zone.run(() => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+      });
+      console.log(this.lat,this.lng);
+  
+    });
+    //this.watch.unsubscribe();
+} 
 
   
 

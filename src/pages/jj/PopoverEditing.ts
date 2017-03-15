@@ -13,12 +13,13 @@ import { MapShareService } from '../../providers/mapshareservices';
   providers:[MapShareService],
 })
 export class PopoverEditing {
-  
   data:any;
+  fungsi:any;
   constructor(private navParams: NavParams,public mapEdit: MapShareService,public navCtrl: NavController) {
-    //console.log(this.mapEdit.drawingmode);
+    console.log(this.navParams.data.data.fungsi);
     if (this.navParams.data) {
-      this.data  = this.navParams.data 
+      this.data  = this.navParams.data.data
+      //this.fungsi  = this.navParams.data.fungsi; 
     }
     
     this.mapEdit.getdrawing();
@@ -35,9 +36,12 @@ export class PopoverEditing {
     console.log(this.mapEdit.drawingmode);
   }
   save(){
-    console.log(this.data);
+    let id = this.data.fungsi.id;
+    let poly = this.data.poly;
+    let data = {shapeline:JSON.stringify(poly) };
     
-    /*this.mapEdit.PostEditMapFungsi(id,data).subscribe(data => {
+    
+    this.mapEdit.PostEditMapFungsi(id,data).subscribe(data => {
         this.data = data;
         if(this.data[0].result =="success"){
           
@@ -46,6 +50,6 @@ export class PopoverEditing {
             
     }, error => {
       console.log("Oooops!");
-    });*/
+    });
   }
 }

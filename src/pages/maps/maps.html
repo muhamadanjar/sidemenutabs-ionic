@@ -11,19 +11,7 @@
 </ion-header>
  
 <ion-content>
-  <div #map id="map"></div>
-  <ion-list>
-    <ion-list-header>
-      Hobbits
-    </ion-list-header>
-    <a ion-item (click)="openModal(0)">
-      Gollum
-    </a>
-    <a ion-item (click)="openModal(2)">
-      Frodo Baggins
-    </a>
-    <a ion-item (click)="openModal(3)">
-      Sam
-    </a>
-  </ion-list>  
+  <ion-searchbar color="appbase" (input)="search($event, searchKey)">
+  </ion-searchbar>
+  <div #map id="map"></div> 
 </ion-content>

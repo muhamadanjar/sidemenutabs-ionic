@@ -9,7 +9,6 @@ import {Observable} from 'rxjs/Rx';
 
 declare var google:any;
 
-declare var klokantech:any;
 var x: number = 5;
 var marker: any;
 let items:any;
@@ -37,8 +36,6 @@ export class MapsPage {
   marker:any;
   public poipandeglang;
   
-  
-
 
   constructor(
     public navCtrl: NavController, public platform: Platform,
@@ -115,8 +112,6 @@ export class MapsPage {
                 
             });*/
 
-            
-
           }
           
         },
@@ -167,7 +162,7 @@ export class MapsPage {
         var geolocationDiv = document.createElement('div');
         var geolocationControl = this.GeolocationControl(geolocationDiv, map);
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocationDiv);
-        var geoloccontrol = new klokantech.GeolocationControl(map, mapMaxZoom);
+        
         
         //this.LoadFasilitas();
         this.LoadPoiPandeglang();
@@ -334,15 +329,76 @@ export class MapsPage {
   
   }
 
-  createButtonGeo(){
-      let script = document.createElement("script");
-      script.id = "locationButton";
-      script.src = 'https://cdn.klokantech.com/maptilerlayer/v1/index.js';
-      
- 
-      document.head.appendChild(script);
-      
+  WMSGetTileUrl(tile, zoom) {
+      var projection = map.getProjection();
+      var zpow = Math.pow(2, zoom);
+      var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
+      var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
+      var ulw = projection.fromPointToLatLng(ul);
+      var lrw = projection.fromPointToLatLng(lr);
+      //The user will enter the address to the public WMS layer here.  The data must be in WGS84
+      var baseURL = "http://sampleserver1.arcgisonline.com/arcgis/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/WMSServer?&REQUEST=GetMap&SERVICE=WMS&VERSION=1.3&LAYERS="; //begining of the WMS URL ending with a "?" or a "&".
+      var format = "image%2Fjpeg"; //type of image returned  or image/jpeg
+      //The layer ID.  Can be found when using the layers properties tool in ArcMap
+      var layers = "0";
+      var srs = "EPSG:4326"; //projection to display. This is the projection of google map. Don't change unless you know what you are doing.
+      var bbox = ulw.lat() + "," + ulw.lng() + "," + lrw.lat() + "," + lrw.lng();
+      //Add the components of the URL together
+      var url = baseURL + layers + "&Styles=default" + "&SRS=" + srs + "&BBOX=" + bbox + "&width=256" + "&height=256" + "&format=" + format + "&BGCOLOR=0xFFFFFF&TRANSPARENT=true" + "&reaspect=false" + "&CRS=EPSG:4326";
+      return url;
   }
+
+  WMSGetTileUrl2(tile, zoom) {
+      var projection = map.getProjection();
+      var zpow = Math.pow(2, zoom);
+      var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
+      var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
+      var ulw = projection.fromPointToLatLng(ul);
+      var lrw = projection.fromPointToLatLng(lr);
+      //The user will enter the address to the public WMS layer here.  The data must be in WGS84
+      var baseURL = "http://demo.cubewerx.com/cubewerx/cubeserv.cgi?";
+      var version = "1.3.0";
+      var request = "GetMap";
+      var format = "image%2Fjpeg"; //type of image returned  or image/jpeg
+      //The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings 
+      var layers = "Foundation.GTOPO30";
+      //projection to display. This is the projection of google map. Don't change unless you know what you are doing.  
+      //Different from other WMS servers that the projection information is called by crs, instead of srs
+      var crs = "EPSG:4326";
+      //With the 1.3.0 version the coordinates are read in LatLon, as opposed to LonLat in previous versions
+      var bbox = ulw.lat() + "," + ulw.lng() + "," + lrw.lat() + "," + lrw.lng();
+      var service = "WMS";
+      //the size of the tile, must be 256x256
+      var width = "256";
+      var height = "256";
+      //Some WMS come with named styles.  The user can set to default.
+      var styles = "default";
+      //Establish the baseURL.  Several elements, including &EXCEPTIONS=INIMAGE and &Service are unique to openLayers addresses.
+      var url = baseURL + "Layers=" + layers + "&version=" + version + "&EXCEPTIONS=INIMAGE" + "&Service=" + service + "&request=" + request + "&Styles=" + styles + "&format=" + format + "&CRS=" + crs + "&BBOX=" + bbox + "&width=" + width + "&height=" + height;
+      return url;
+  }
+
+
+  WMSGetTileUrl4(tile, zoom) {
+      var projection = map.getProjection();
+      var zpow = Math.pow(2, zoom);
+      var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
+      var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
+      var ulw = projection.fromPointToLatLng(ul);
+      var lrw = projection.fromPointToLatLng(lr);
+      //The user will enter the address to the public WMS layer here.  The data must be in WGS84
+      var baseURL = "http://sampleserver1.arcgisonline.com/arcgis/services/Specialty/ESRI_StateCityHighway_USA/MapServer/WMSServer?&REQUEST=GetMap&SERVICE=WMS&VERSION=1.3&LAYERS="; //begining of the WMS URL ending with a "?" or a "&".
+      var format = "image/png"; //type of image returned  or image/jpeg
+      //The layer ID.  Can be found when using the layers properties tool in ArcMap
+      var layers = "0";
+      var srs = "EPSG:4326"; //projection to display. This is the projection of google map. Don't change unless you know what you are doing.
+      var bbox = ulw.lat() + "," + ulw.lng() + "," + lrw.lat() + "," + lrw.lng();
+      //Add the components of the URL together
+      var url = baseURL + layers + "&Styles=default" + "&SRS=" + srs + "&BBOX=" + bbox + "&width=256" + "&height=256" + "&format=" + format + 
+         "&BGCOLOR=0xFFFFFF&TRANSPARENT=true" + "&reaspect=false" + "&CRS=EPSG:4326";
+      return url;
+  }
+  
 
   setMarkers(map,locations){
         

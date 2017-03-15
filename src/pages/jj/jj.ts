@@ -14,9 +14,11 @@ export class JjPage {
   constructor
   ( public navCtrl: NavController, 
     public navParams: NavParams,
-    menu: MenuController
+    menu: MenuController,
+    //public jFungsi: JaringanJalanFungsiMapTambahPage
   ){
     menu.enable(true);
+    
   }
 
   ionViewDidLoad() {
@@ -24,15 +26,12 @@ export class JjPage {
   }
 
   gotoPage(page){
-    this.nav.setRoot(page.component);
+   this.navCtrl.push(page);
   }
   goToFungsi() {
-    
     this.navCtrl.push(JaringanJalanFungsiListPage);
   }
-   goToMapAdd(){
-     this.navCtrl.push(JaringanJalanFungsiMapEditPage);
-   }
+  
 
   
 
