@@ -355,10 +355,10 @@ export class MapsPage {
       
       //markerMylocation.setMap(null);
       if(Geolocation){
-      Geolocation.getCurrentPosition().then((position) => {
-        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        Geolocation.getCurrentPosition().then((position) => {
+          let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         
-        let markerMylocation = new google.maps.Marker({
+          let markerMylocation = new google.maps.Marker({
             position: latLng,
             title:"Lokasi saya saat ini!",
             icon: 'assets/maps/you-are-here-2.png',
@@ -371,17 +371,17 @@ export class MapsPage {
 
         });*/
       
-      }, (err) => {
-        console.log(err);
-      });
+        }, (err) => {
+          console.log(err);
+        });
 
-      let watch = Geolocation.watchPosition();
-      watch.subscribe((data) => {
+        let watch = Geolocation.watchPosition();
+        watch.subscribe((data) => {
         console.log(data);
         // data can be a set of coordinates, or an error (if an error occurred).
         // data.coords.latitude
         // data.coords.longitude
-      });
+        });
       }
       
   }

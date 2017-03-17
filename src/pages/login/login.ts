@@ -5,7 +5,6 @@ import { Auth } from '../../providers/auth';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
- 
   animations: [
  
     //For the logo
@@ -62,6 +61,10 @@ export class LoginPage {
   cloudState: any = "in";
   loginState: any = "in";
   formState: any = "in";
+
+  email: string;
+  password: string;
+  loading_show: any;
  
   constructor(
     public navCtrl: NavController, 
@@ -70,6 +73,36 @@ export class LoginPage {
     
   ) {}
 
+  ionViewDidLoad() {
+ 
+        this.showLoader();
+ 
+        //Check if already authenticated
+        this.authService.checkAuthentication().then((res) => {
+            console.log("Already authorized");
+            this.loading.dismiss();
+            //this.navCtrl.setRoot(HomePage);
+        }, (err) => {
+            console.log("Not already authorized");
+            this.loading.dismiss();
+        });
+ 
+  }
+  login(){
+    this.showLoader();
+    let credentials = {
+      email: this.email,
+      password: this.password
+    };
+    this.authService.login(credentials).then((result) => {
+        this.loading_show.dismiss();
+            console.log(result);
+            //this.navCtrl.setRoot(HomePage);
+    }, (err) => {
+            this.loading_show.dismiss();
+            console.log(err);
+    });
+  }
   logout(){
  
     this.authService.logout();
@@ -95,6 +128,13 @@ export class LoginPage {
       buttons: ['OK']
     });
     alert.present(prompt);
+  }
+
+  showLoader(){
+    this.loading_show = this.loadingCtrl.create({
+      content: 'Authenticating...'
+    });
+    this.loading_show.present();
   }
  
 }

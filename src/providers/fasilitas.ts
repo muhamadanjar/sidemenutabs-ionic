@@ -27,6 +27,12 @@ export class DataFasilitas {
     var response = this.http.get(url).map(res => res.json());
     return response;
   }
+  
+  InsertPostFasilitas(data){
+    var url = this.rootUrl+'/fasilitas/insert';
+    var response = this.http.post(url,data).map(res => res.json());
+    return response;
+  }
 
   DeleteFasilitas(id){
     var url = this.rootUrl+'/deletefasilitas/'+id;

@@ -3,18 +3,11 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 
-/*
-  Generated class for the Auth provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class Auth {
   public token: any;
-  constructor(public http: Http, public storage: Storage) {
-    console.log('Hello Auth Provider');
-  }
+  constructor(public http: Http, public storage: Storage) {}
 
   checkAuthentication(){
  
@@ -71,7 +64,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
  
-        this.http.post('https://192.168.20.8:8100/jjapp/auth/login', JSON.stringify(credentials), {headers: headers})
+        this.http.post('http://192.168.20.8:8100/jjpan/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
  
             let data = res.json();

@@ -6,6 +6,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { MapsPage } from '../pages/maps/maps';
 import { LoginPage } from '../pages/login/login';
 import { JjPage } from '../pages/jj/jj';
+import { PoiPage } from '../pages/poi/poi';
 
  
 
@@ -26,7 +27,8 @@ export class MyApp {
     this.pages = [
       { title: 'Beranda', component: TabsPage },
       { title: 'Login', component: LoginPage },
-      { title: 'Jaringan Jalan', component: JjPage }
+      { title: 'Jaringan Jalan', component: JjPage },
+      { title: 'POI', component: PoiPage }
     ];
 
   }

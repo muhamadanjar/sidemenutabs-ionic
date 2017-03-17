@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { HomePage } from '../home/home';
 import { AboutPage } from '../about/about';
 import { MapsPage } from '../maps/maps';
+import { PoiPage } from '../poi/poi';
 
 //import { BasicPage as ModalBasicPage } from '../home/pages';
 
@@ -14,7 +15,7 @@ export class TabsPage {
   // should be each tab's root Page
   tab1Root: any = HomePage;
   tab2Root: any = AboutPage;
-  tab3Root: any = AboutPage;
+  tab3Root: any = PoiPage;
   tab4Root: any = MapsPage;
 
   constructor() {

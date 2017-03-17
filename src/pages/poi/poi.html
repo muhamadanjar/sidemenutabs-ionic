@@ -1,0 +1,101 @@
+<!--
+  Generated template for the Poi page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    
+    <ion-title>POI</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+   
+    <ion-card-content>
+      <ion-card-title>
+        GPS
+      </ion-card-title>
+      <p>
+        {{data.gpsinfo}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <form (ngSubmit)="submit()">
+      <ion-item style="display: none">
+        <ion-input type="text" [(ngModel)]="data.x" name="x"></ion-input>
+        <ion-input type="text" [(ngModel)]="data.x" name="y"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label stacked>Nama POI</ion-label>
+        <ion-input type="text" [(ngModel)]="data.nama" name="nama"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Nama Jalan</ion-label>
+        <ion-input [(ngModel)]="data.nama_jalan" name="nama_jalan"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Fasilitas</ion-label>
+        <ion-select [(ngModel)]="data.fasilitas" name="fasilitas"> 
+          
+          <ion-option value="INDUSTRI">INDUSTRI</ion-option>
+          <ion-option value="KESEHATAN">KESEHATAN</ion-option>
+          <ion-option value="OLAH RAGA">OLAH RAGA</ion-option>
+          <ion-option value="PARIWISATA">PARIWISATA</ion-option>
+          <ion-option value="PENDIDIKAN">PENDIDIKAN</ion-option>
+          <ion-option value="PERDAGANGAN DAN JASA">PERDAGANGAN DAN JASA</ion-option>
+          <ion-option value="PERIBADATAN">PERIBADATAN</ion-option>
+          <ion-option value="PERKANTORAN">PERKANTORAN</ion-option>
+          <ion-option value="PERUMAHAN">PERUMAHAN</ion-option>
+          <ion-option value="REST AREA">REST AREA</ion-option>
+          <ion-option value="SPBU">SPBU</ion-option>
+          <ion-option value="TEMPAT PEMAKAMAN UMUM">TEMPAT PEMAKAMAN UMUM</ion-option>
+          <ion-option value="TRANSPORTASI">TRANSPORTASI</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title>
+            Foto 
+          </ion-card-title>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-buttons>
+                  <button ion-button icon-left (click)="presentActionSheet()" type="button">
+                    <ion-icon name="camera"></ion-icon>Select Image
+                  </button>
+                  <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null" type="button">
+                    <ion-icon name="cloud-upload"></ion-icon>Upload
+                  </button>
+                </ion-buttons>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    
+    <ion-buttons>
+      <ion-grid text-center>
+        <ion-row>
+          <ion-col><button ion-button icon-left block (click)="submit" type="button"> Proses</button></ion-col>
+          <ion-col><button ion-button icon-left block (click)="submit" type="button"><ion-icon name="map"></ion-icon> Map</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
