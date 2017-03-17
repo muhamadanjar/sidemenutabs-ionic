@@ -1,5 +1,6 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController,AlertController, LoadingController,Loading } from 'ionic-angular';
+import { HomePage } from '../home/home';
 import { Auth } from '../../providers/auth';
  
 @Component({
@@ -62,7 +63,7 @@ export class LoginPage {
   loginState: any = "in";
   formState: any = "in";
 
-  email: string;
+  username: string;
   password: string;
   loading_show: any;
  
@@ -72,7 +73,7 @@ export class LoginPage {
     private alertCtrl: AlertController, private loadingCtrl: LoadingController
     
   ) {}
-
+  /*
   ionViewDidLoad() {
  
         this.showLoader();
@@ -130,11 +131,52 @@ export class LoginPage {
     alert.present(prompt);
   }
 
-  showLoader(){
-    this.loading_show = this.loadingCtrl.create({
-      content: 'Authenticating...'
-    });
-    this.loading_show.present();
-  }
+  */
+
+  ionViewDidLoad() {
+ 
+        this.showLoader();
+ 
+        //Check if already authenticated
+        this.authService.checkAuthentication().then((res) => {
+            console.log("Already authorized");
+            this.loading.dismiss();
+            this.navCtrl.setRoot(HomePage);
+        }, (err) => {
+            console.log("Not already authorized");
+            this.loading.dismiss();
+        });
+ 
+    }
+
+    showLoader(){
+ 
+        this.loading = this.loadingCtrl.create({
+            content: 'Authenticating...'
+        });
+ 
+        this.loading.present();
+ 
+    }
+
+    login(){
+ 
+        this.showLoader();
+ 
+        let credentials = {
+            username: this.username,
+            password: this.password
+        };
+ 
+        this.authService.login(credentials).then((result) => {
+            this.loading.dismiss();
+            console.log(result);
+            this.navCtrl.setRoot(HomePage);
+        }, (err) => {
+            this.loading.dismiss();
+            console.log(err);
+        });
+ 
+    }
  
 }

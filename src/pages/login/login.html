@@ -11,11 +11,11 @@
 
 <ion-content>
   <div padding [@flyInBottomFast]="cloudState" id="cloud-layer">    
-    <ion-row>
+    <!--<ion-row>
       <ion-col>
         <img [@flyInBottomSlow]="logoState" src="assets/images/logo.png" />
       </ion-col>
-    </ion-row>
+    </ion-row>-->
  
     <ion-row>
       <ion-col>
@@ -23,12 +23,12 @@
  
           <ion-item>
             <ion-label>Username</ion-label>
-            <ion-input type="text" #username></ion-input>
+            <ion-input type="text" [(ngModel)]="username"></ion-input>
           </ion-item>
  
           <ion-item>
             <ion-label>Password</ion-label>
-            <ion-input type="password" #password></ion-input>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
           </ion-item>
  
         </ion-list>

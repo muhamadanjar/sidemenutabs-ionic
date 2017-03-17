@@ -16,7 +16,7 @@ import { PoiPage } from '../pages/poi/poi';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage = TabsPage;
+  rootPage = LoginPage;
 
   pages: Array<{title: string, component: any}>;
 
