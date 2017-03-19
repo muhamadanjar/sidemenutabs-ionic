@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { JaringanJalanFungsiMapEditPage } from './fungsiMapEdit';
-import { PopoverController,ViewController,NavController, NavParams } from 'ionic-angular';
+import { PopoverController,NavController, NavParams } from 'ionic-angular';
 import { MapShareService } from '../../providers/mapshareservices';
 @Component({
   template: `

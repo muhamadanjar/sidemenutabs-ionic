@@ -21,6 +21,9 @@
       <ion-card-title>
         GPS
       </ion-card-title>
+      <button ion-button icon-left (click)="geolocate()" type="button">
+        <ion-icon name="gps"></ion-icon>Dapatkan Lokasi
+      </button>
       <p>
         {{data.gpsinfo}}
       </p>
@@ -92,8 +95,8 @@
     <ion-buttons>
       <ion-grid text-center>
         <ion-row>
-          <ion-col><button ion-button icon-left block (click)="submit" type="button"> Proses</button></ion-col>
-          <ion-col><button ion-button icon-left block (click)="submit" type="button"><ion-icon name="map"></ion-icon> Map</button></ion-col>
+          <ion-col><button ion-button icon-left block (click)="submit()" type="button"> Proses</button></ion-col>
+          <ion-col><button ion-button icon-left block (click)="getMap()" type="button"><ion-icon name="map"></ion-icon> Map</button></ion-col>
         </ion-row>
       </ion-grid>
     </ion-buttons>

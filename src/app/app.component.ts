@@ -7,7 +7,7 @@ import { MapsPage } from '../pages/maps/maps';
 import { LoginPage } from '../pages/login/login';
 import { JjPage } from '../pages/jj/jj';
 import { PoiPage } from '../pages/poi/poi';
-
+import { Auth } from '../providers/auth';
  
 
 @Component({
@@ -20,13 +20,12 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform,public auth:Auth) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Beranda', component: TabsPage },
-      { title: 'Login', component: LoginPage },
       { title: 'Jaringan Jalan', component: JjPage },
       { title: 'POI', component: PoiPage }
     ];

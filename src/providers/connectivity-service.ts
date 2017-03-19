@@ -8,10 +8,18 @@ declare var Connection;
 export class ConnectivityService {
  
   onDevice: boolean;
+  public rootUrl: string;
  
   constructor(public platform: Platform){
     this.onDevice = this.platform.is('cordova');
-    
+    this.setUrl('http://localhost:8100/jjpan');
+  }
+
+  setUrl(url) {
+    this.rootUrl = url;
+  }
+  getUrl() {
+    return this.rootUrl;   
   }
  
   isOnline(): boolean {

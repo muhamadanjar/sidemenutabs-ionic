@@ -25,6 +25,7 @@ import { JaringanJalanFungsiMapEditPage} from '../pages/jj/fungsiMapEdit';
 import { PopoverEditing } from '../pages/jj/PopoverEditing';
 
 import { PoiPage } from '../pages/poi/poi';
+import { PoiMapPage } from '../pages/poi/poiMap';
 
 import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
 import { ModalContentPage as MapModal } from '../pages/maps/modal';
@@ -62,6 +63,7 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
     PopoverEditing,
 
     PoiPage,
+    PoiMapPage,
 
     LoginPage,
 
@@ -101,6 +103,7 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
     PopoverEditing,
 
     PoiPage,
+    PoiMapPage,
 
     ModalBasicPage,
     ModalContentPage,
@@ -108,6 +111,12 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
 
     
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},DataFasilitas,MapService,JaringanJalanService,Auth,Storage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataFasilitas,
+    MapService,
+    JaringanJalanService,
+    Auth,
+    Storage,
+    ConnectivityService]
 })
 export class AppModule {}

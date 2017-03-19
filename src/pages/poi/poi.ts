@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams,ToastController, ActionSheetController, Platform, Loading, LoadingController } from 'ionic-angular';
 import { Geolocation, Camera, File, Transfer, FilePath } from 'ionic-native';
 import {DataFasilitas} from "../../providers/fasilitas";
+import {PoiMapPage} from "./poiMap";
+import { Storage } from '@ionic/storage';
 declare var cordova: any;
 @Component({
   selector: 'page-poi',
@@ -10,7 +12,7 @@ declare var cordova: any;
 export class PoiPage {
   x:any;
   y:any;
-  public data;
+  public data:any;
   results: Array<any>;
 
   lastImage: string = null;
@@ -22,15 +24,28 @@ export class PoiPage {
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
     public loadingCtrl: LoadingController,  
-    public dtfasilitas:DataFasilitas
+    public dtfasilitas:DataFasilitas,
+    public storage: Storage
   ) {
     this.data = {};
-    this.geolocate()
+    if(this.navParams.data.data != null){
+      this.data = this.navParams.data.data;
+    }
+    
+    //this.geolocate()
     
   }
 
+  ngAfterViewInit() {}
+
   ionViewDidLoad() {
+    console.log(this.navParams.data.data);
+    console.log('Data Baru',this.navParams.data.data_baru);
     
+    
+    /*this.storage.get('datapoi').then((value) => {
+      console.log('value baru',value);
+    });*/
   }
 
   geolocate(){
@@ -85,22 +100,22 @@ export class PoiPage {
   //Upload Foto
   public presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Select Image Source',
+      title: 'Pilih Gambar',
       buttons: [
         {
-          text: 'Load from Library',
+          text: 'Ambil dari Librari',
           handler: () => {
             this.takePicture(Camera.PictureSourceType.PHOTOLIBRARY);
           }
         },
         {
-          text: 'Use Camera',
+          text: 'Gunakan Camera',
           handler: () => {
             this.takePicture(Camera.PictureSourceType.CAMERA);
           }
         },
         {
-          text: 'Cancel',
+          text: 'Batal',
           role: 'cancel'
         }
       ]
@@ -191,11 +206,18 @@ export class PoiPage {
 	  fileTransfer.upload(targetPath, url, options).then(data => {
 	    this.loading.dismissAll()
 	    this.presentToast('Image succesful uploaded.');
+      this.data.foto = this.lastImage;
 	  }, err => {
 	    this.loading.dismissAll()
 	    this.presentToast('Error while uploading file.');
 	  });
 	}
+
+  public getMap(){
+    //this.storage.set('datapoi', this.data);
+    this.navCtrl.push(PoiMapPage,{data:this.data});
+
+  }
 
   
 

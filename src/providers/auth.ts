@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { ConnectivityService } from './connectivity-service';
 
 
 @Injectable()
 export class Auth {
   public token: any;
-  constructor(public http: Http, public storage: Storage) {}
-
+  public url;
+  constructor(public http: Http, public storage: Storage,public conn:ConnectivityService) {
+    this.url = this.conn.rootUrl;
+    console.log(this.url);
+  }
+  
   checkAuthentication(){
  
     return new Promise((resolve, reject) => {
@@ -20,8 +25,9 @@ export class Auth {
  
             let headers = new Headers();
             headers.append('Authorization', this.token);
- 
-            this.http.get('https://YOUR_HEROKU_APP.herokuapp.com/api/auth/protected', {headers: headers})
+            console.log(this.token);
+            
+            this.http.get(this.url+'/checklogin', {headers: headers})
                 .subscribe(res => {
                     resolve(res);
                 }, (err) => {
@@ -64,7 +70,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
  
-        this.http.post('http://192.168.20.8:8100/jjpan/login', JSON.stringify(credentials), {headers: headers})
+        this.http.post(this.url+'/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
  
             let data = res.json();
