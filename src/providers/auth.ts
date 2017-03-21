@@ -22,7 +22,7 @@ export class Auth {
         this.storage.get('token').then((value) => {
  
             this.token = value;
- 
+            
             let headers = new Headers();
             headers.append('Authorization', this.token);
             console.log(this.token);
@@ -74,6 +74,7 @@ export class Auth {
           .subscribe(res => {
  
             let data = res.json();
+            //console.log(data);
             this.token = data.token;
             this.storage.set('token', data.token);
             resolve(data);

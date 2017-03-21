@@ -45,4 +45,8 @@ export class MyApp {
       Splashscreen.hide();
     });
   }
+
+  logout() {
+    this.auth.logout();
+  }
 }

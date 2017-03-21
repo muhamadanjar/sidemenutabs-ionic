@@ -52,7 +52,7 @@ export class PoiMapPage {
     });
   }
   ngAfterViewInit() {
-    //this.initializeMap();
+    this.initializeMap();
     console.log(this.data);
     /*this.storage.get('datapoi').then((value) => {
       console.log(value);
@@ -64,7 +64,7 @@ export class PoiMapPage {
     //this.navCtrl.pop();
     //this.data.gpsinfo = "apa";
     this.storage.set('datapoi',this.data);
-    this.navCtrl.push(PoiPage,{data:this.data});
+    this.navCtrl.setRoot(PoiPage,{data:this.data});
   }
   getRefresh(){
     console.log('Get Refresh');

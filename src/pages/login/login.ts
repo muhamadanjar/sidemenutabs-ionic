@@ -139,11 +139,11 @@ export class LoginPage {
  
         //Check if already authenticated
         this.authService.checkAuthentication().then((res) => {
-            console.log("Already authorized");
+            console.log("Already authorized",res);
             this.loading.dismiss();
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
-            console.log("Not already authorized");
+            console.log("Not already authorized",err);
             this.loading.dismiss();
         });
  

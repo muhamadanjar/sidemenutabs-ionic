@@ -3,6 +3,7 @@ import { NavController, NavParams,ToastController, ActionSheetController, Platfo
 import { Geolocation, Camera, File, Transfer, FilePath } from 'ionic-native';
 import {DataFasilitas} from "../../providers/fasilitas";
 import {PoiMapPage} from "./poiMap";
+import {HomePage} from "./../home/home";
 import { Storage } from '@ionic/storage';
 declare var cordova: any;
 @Component({
@@ -65,10 +66,9 @@ export class PoiPage {
   submit(){
      this.presentToast();
      //this.geolocate();
-     this.data.x = this.x;this.data.y = this.y;
-     this.data.foto = this.lastImage;
+     //this.data.x = this.x;this.data.y = this.y;
+     //this.data.foto = this.lastImage;
      let data = JSON.stringify({
-          
           nama:this.data.nama,
           nama_jalan:this.data.nama_jalan,
           fasilitas:this.data.fasilitas,
@@ -77,16 +77,17 @@ export class PoiPage {
           foto:this.data.foto
           
      });
+     console.log(data);
      this.dtfasilitas.InsertPostFasilitas(data).subscribe(data => {
           this.results = data;
           console.log(data);
           if(this.results[0].result =="success"){
-            this.navCtrl.popToRoot();
+            this.navCtrl.setRoot(HomePage);
           }
 
-        }, error => {
+      }, error => {
             console.log("Oooops!");
-        });
+      });
   }
 
   presentToast(text:string = 'Tunggu Sebentar') {
@@ -163,6 +164,7 @@ export class PoiPage {
 	private copyFileToLocalDir(namePath, currentName, newFileName) {
 	  File.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
 	    this.lastImage = newFileName;
+      this.data.foto = newFileName;
 	  }, error => {
 	    this.presentToast('Error while storing file.');
 	  });
@@ -206,7 +208,6 @@ export class PoiPage {
 	  fileTransfer.upload(targetPath, url, options).then(data => {
 	    this.loading.dismissAll()
 	    this.presentToast('Image succesful uploaded.');
-      this.data.foto = this.lastImage;
 	  }, err => {
 	    this.loading.dismissAll()
 	    this.presentToast('Error while uploading file.');
