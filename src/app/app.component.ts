@@ -47,6 +47,17 @@ export class MyApp {
   }
 
   logout() {
-    this.auth.logout();
+    //this.auth.logout();
+    this.auth.logout().subscribe(
+        data => {
+          console.log(data);
+          if(data.login == 0){
+            this.nav.setRoot(LoginPage);
+          }
+        },
+        err => {
+          console.log(err);
+        }
+    );
   }
 }

@@ -1,8 +1,9 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController,AlertController, LoadingController,Loading } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { Auth } from '../../providers/auth';
- 
+import { Auth,User } from '../../providers/auth';
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -63,6 +64,7 @@ export class LoginPage {
   loginState: any = "in";
   formState: any = "in";
 
+  currentUser: User;
   username: string;
   password: string;
   loading_show: any;
@@ -70,6 +72,7 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController, 
     public authService: Auth,
+    public storage: Storage,
     private alertCtrl: AlertController, private loadingCtrl: LoadingController
     
   ) {}
@@ -135,17 +138,17 @@ export class LoginPage {
 
   ionViewDidLoad() {
  
-        this.showLoader();
+        //this.showLoader();
  
         //Check if already authenticated
-        this.authService.checkAuthentication().then((res) => {
+        /*this.authService.checkAuthentication().then((res) => {
             console.log("Already authorized",res);
             this.loading.dismiss();
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
             console.log("Not already authorized",err);
             this.loading.dismiss();
-        });
+        });*/
  
     }
 
@@ -159,6 +162,19 @@ export class LoginPage {
  
     }
 
+    showError(text) {
+      setTimeout(() => {
+        this.loading.dismiss();
+      });
+  
+      let alert = this.alertCtrl.create({
+        title: 'Fail',
+        subTitle: text,
+        buttons: ['OK']
+      });
+      alert.present(prompt);
+    }
+
     login(){
  
         this.showLoader();
@@ -167,14 +183,43 @@ export class LoginPage {
             username: this.username,
             password: this.password
         };
- 
-        this.authService.login(credentials).then((result) => {
+
+        /*this.authService.login(credentials).then((result) => {
             this.loading.dismiss();
-            console.log(result);
+            //console.log(result);
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
             this.loading.dismiss();
             console.log(err);
+            this.navCtrl.setRoot(LoginPage);
+        });*/
+
+        
+        /*this.authService.login(credentials).subscribe(allowed => {
+          if (allowed) {
+            setTimeout(() => {
+            this.loading.dismiss();
+            this.navCtrl.setRoot(HomePage)
+            });
+          } else {
+            this.showError("Access Denied");
+          }
+        },
+        error => {
+          this.showError(error);
+        });*/
+
+        this.authService.login_baru(credentials).subscribe(data => {
+            console.log(data);
+            if(data.status){
+              this.currentUser = new User(data.data.name, data.data.email);
+              this.storage.set('currentUser', this.currentUser);
+              this.navCtrl.setRoot(HomePage);
+            }
+            this.loading.dismiss();
+        }, error => {
+          console.log("Oooops!");
+          this.showError(error);
         });
  
     }

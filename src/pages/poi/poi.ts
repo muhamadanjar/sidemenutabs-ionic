@@ -5,6 +5,7 @@ import {DataFasilitas} from "../../providers/fasilitas";
 import {PoiMapPage} from "./poiMap";
 import {HomePage} from "./../home/home";
 import { Storage } from '@ionic/storage';
+import { Auth } from '../../providers/auth';
 declare var cordova: any;
 @Component({
   selector: 'page-poi',
@@ -18,7 +19,8 @@ export class PoiPage {
 
   lastImage: string = null;
   loading: Loading;
-
+  username: string;
+  
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public toastCtrl: ToastController,
@@ -26,23 +28,21 @@ export class PoiPage {
     public platform: Platform,
     public loadingCtrl: LoadingController,  
     public dtfasilitas:DataFasilitas,
-    public storage: Storage
+    public storage: Storage,
+    public auth: Auth,
   ) {
     this.data = {};
     if(this.navParams.data.data != null){
       this.data = this.navParams.data.data;
     }
     
-    //this.geolocate()
+    
     
   }
 
   ngAfterViewInit() {}
 
   ionViewDidLoad() {
-    console.log(this.navParams.data.data);
-    console.log('Data Baru',this.navParams.data.data_baru);
-    
     
     /*this.storage.get('datapoi').then((value) => {
       console.log('value baru',value);
@@ -84,7 +84,6 @@ export class PoiPage {
           if(this.results[0].result =="success"){
             this.navCtrl.setRoot(HomePage);
           }
-
       }, error => {
             console.log("Oooops!");
       });
