@@ -51,7 +51,7 @@ export class MyApp {
     this.auth.logout().subscribe(
         data => {
           console.log(data);
-          if(data.login == 0){
+          if(data.status == false){
             this.nav.setRoot(LoginPage);
           }
         },

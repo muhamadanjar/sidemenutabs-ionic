@@ -138,17 +138,18 @@ export class LoginPage {
 
   ionViewDidLoad() {
  
-        //this.showLoader();
+        this.showLoader();
  
         //Check if already authenticated
-        /*this.authService.checkAuthentication().then((res) => {
-            console.log("Already authorized",res);
+        this.authService.checkAuthentication().then((res) => {
+            console.log("Already authorized",);
             this.loading.dismiss();
+            
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
             console.log("Not already authorized",err);
             this.loading.dismiss();
-        });*/
+        });
  
     }
 
