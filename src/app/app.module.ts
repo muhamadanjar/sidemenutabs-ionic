@@ -25,7 +25,7 @@ import { JaringanJalanFungsiMapEditPage} from '../pages/jj/fungsiMapEdit';
 import { PopoverEditing } from '../pages/jj/PopoverEditing';
 
 import { PoiPage } from '../pages/poi/poi';
-import { PoiMapPage } from '../pages/poi/poiMap';
+import { PoiMapPage, PinPointMapPage } from '../pages/poi/poiMap';
 
 import { BasicPage as ModalBasicPage,ModalContentPage } from '../pages/home/pages';
 import { ModalContentPage as MapModal } from '../pages/maps/modal';
@@ -64,6 +64,7 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
 
     PoiPage,
     PoiMapPage,
+    PinPointMapPage,
 
     LoginPage,
 
@@ -104,6 +105,7 @@ import { JaringanJalan as JaringanJalanService } from '../providers/jaringan-jal
 
     PoiPage,
     PoiMapPage,
+    PinPointMapPage,
 
     ModalBasicPage,
     ModalContentPage,

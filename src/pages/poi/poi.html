@@ -1,54 +1,69 @@
-<!--
-  Generated template for the Poi page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+<ion-header class="headerbg">
 
   <ion-navbar>
     
-    <ion-title>POI</ion-title>
+    <ion-title><img src="../assets/images/icon.png" width="36"/>Jaringan <span color="primary" class="irigasibold">Irigasi</span></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-card>
-   
-    <ion-card-content>
-      <ion-card-title>
+  <div padding>
+    <ion-segment [(ngModel)]="latlng">
+      <ion-segment-button value="gps">
         GPS
-      </ion-card-title>
-      <button ion-button icon-left (click)="geolocate()" type="button">
-        <ion-icon name="gps"></ion-icon>Dapatkan Lokasi
-      </button>
-      <p>
-        {{data.gpsinfo}}
-        
-      </p>
-    </ion-card-content>
-  </ion-card>
+      </ion-segment-button>
+      <ion-segment-button value="pinpoint">
+        Pin Point
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="latlng">
+    <ion-list *ngSwitchCase="'gps'">
+      <ion-item>
+          <button type="button" ion-button icon-left block (click)="geolocate()">
+            <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+            Dapatkan Lokasi
+          </button>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'pinpoint'">
+      <ion-item>
+        <button type="button" ion-button icon-left block (click)="getMapPin()">
+          <ion-icon ios="ios-pin" md="md-pin"></ion-icon>
+          Pilih Lokasi...</button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
   <ion-list>
     <form (ngSubmit)="submit()">
-      <ion-item style="display: none">
-        <ion-input type="text" [(ngModel)]="data.x" name="x"></ion-input>
-        <ion-input type="text" [(ngModel)]="data.x" name="y"></ion-input>
-      </ion-item>
-      
       <ion-item>
-        <ion-label stacked>Nama POI</ion-label>
-        <ion-input type="text" [(ngModel)]="data.nama" name="nama"></ion-input>
+        <ion-icon ios="ios-globe" md="md-globe"  [ngStyle]="{'color': '#0CA9EA'}"></ion-icon>
+        Latitude
+        <ion-badge item-right>{{data.y}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-icon ios="ios-globe" md="md-globe" [ngStyle]="{'color': '#CE6296'}"></ion-icon>
+        Longitude
+        <ion-badge item-right>{{data.x}}</ion-badge>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Nama Lokasi</ion-label>
+        <ion-input type="text" [(ngModel)]="data.nama" name="nama" ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Nama Jalan</ion-label>
-        <ion-input [(ngModel)]="data.nama_jalan" name="nama_jalan"></ion-input>
+        <ion-input [(ngModel)]="data.nama_jalan" name="nama_jalan" ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Fasilitas</ion-label>
-        <ion-select [(ngModel)]="data.fasilitas" name="fasilitas"> 
-          
+        <ion-select [(ngModel)]="data.fasilitas" name="fasilitas" > 
           <ion-option value="INDUSTRI">INDUSTRI</ion-option>
           <ion-option value="KESEHATAN">KESEHATAN</ion-option>
           <ion-option value="OLAH RAGA">OLAH RAGA</ion-option>
@@ -64,11 +79,21 @@
           <ion-option value="TRANSPORTASI">TRANSPORTASI</ion-option>
         </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label stacked>Kondisi</ion-label>
+        <ion-select [(ngModel)]="data.kondisi" name="kondisi"> 
+          <ion-option value="Baik">Baik</ion-option>
+          <ion-option value="Sedang">Sedang</ion-option>
+          <ion-option value="Rusak Ringan">Rusak Ringan</ion-option>
+          <ion-option value="Rusak">Rusak</ion-option>
+        </ion-select>
+      </ion-item>
       <ion-card>
         <ion-card-content>
           <ion-card-title>
             Foto 
           </ion-card-title>
+          <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
           <ion-grid text-center>
             <ion-row>
               <ion-col>
@@ -91,15 +116,12 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    
-    <ion-buttons>
-      <ion-grid text-center>
+  
+      <ion-grid text-center class="button-group">
         <ion-row>
-          <ion-col><button ion-button icon-left block (click)="submit()" type="button"> Proses</button></ion-col>
-          <ion-col><button ion-button icon-left block (click)="getMap()" type="button"><ion-icon name="map"></ion-icon> Map</button></ion-col>
+          <ion-col class="col"><button ion-button icon-left block (click)="submit()" type="button" class="button"><ion-icon ios="ios-send" md="md-send"></ion-icon> Proses</button></ion-col>
+          <ion-col class="col"><button ion-button icon-left block (click)="getMap()" type="button" class="button"><ion-icon name="map"></ion-icon> Map</button></ion-col>
         </ion-row>
       </ion-grid>
-    </ion-buttons>
-  </ion-toolbar>
+  
 </ion-footer>

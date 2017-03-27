@@ -19,21 +19,18 @@ export class User {
 export class Auth {
   public token: any;
   public url;
+  public url_baru;
   currentUser: User;
   constructor(public http: Http, public storage: Storage,public conn:ConnectivityService) {
     this.url = this.conn.rootUrl;
     console.log(this.url);
+    this.url_baru ='http://192.168.20.8/api';
   }
   
   checkAuthentication(){
- 
     return new Promise((resolve, reject) => {
- 
-        //Load token if exists
         this.storage.get('token').then((value) => {
- 
             this.token = value;
-            
             let headers = new Headers();
             headers.append('Authorization', this.token);
             console.log(this.token);
@@ -129,9 +126,18 @@ export class Auth {
  
   logout(){
     this.storage.set('token', '');
-    var url = this.url+'/logout';
+    this.storage.set('currentUser', '');
+    var url = this.url_baru+'/logout';
     var response = this.http.get(url).map(res => res.json());
     return response;
+  }
+
+  gettoken(){
+    return this.token;
+  }
+
+  settoken(token){
+    this.token = token;
   }
 
 
@@ -175,8 +181,13 @@ export class Auth {
   }
 
   login_baru(data){
-    var url = 'http://192.168.20.8/api/login';
+    var url = this.url_baru+'/login';
     var response = this.http.post(url,data).map(res => res.json());
+    return response;
+  }
+
+  sget(url) {
+    var response = this.http.get(url).map(res => res.json());
     return response;
   }
 

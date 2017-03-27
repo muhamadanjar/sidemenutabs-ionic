@@ -2,7 +2,9 @@ import { Component, trigger, state, style, transition, animate, keyframes } from
 import { NavController,AlertController, LoadingController,Loading } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { Auth,User } from '../../providers/auth';
+import { ConnectivityService } from '../../providers/connectivity-service';
 import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'page-login',
@@ -71,11 +73,15 @@ export class LoginPage {
  
   constructor(
     public navCtrl: NavController, 
-    public authService: Auth,
+    public authService: Auth,  public conn: ConnectivityService,
     public storage: Storage,
     private alertCtrl: AlertController, private loadingCtrl: LoadingController
     
-  ) {}
+  ) {
+    conn.setUrl('http://192.168.20.8/api');
+    console.log(conn.rootUrl);
+    
+  }
   /*
   ionViewDidLoad() {
  
@@ -139,17 +145,25 @@ export class LoginPage {
   ionViewDidLoad() {
  
         this.showLoader();
- 
+        this.authService.sget(this.conn.rootUrl+'/checklogin').subscribe(data => {
+            console.log(data);
+            if(data.status){
+               console.log("Already authorized");
+               this.loading.dismiss();
+               this.navCtrl.setRoot(HomePage);
+            }
+            console.log("Not already authorized");
+            this.loading.dismiss();
+        });
         //Check if already authenticated
-        this.authService.checkAuthentication().then((res) => {
+        /*this.authService.checkAuthentication().then((res) => {
             console.log("Already authorized",);
             this.loading.dismiss();
-            
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
             console.log("Not already authorized",err);
             this.loading.dismiss();
-        });
+        });*/
  
     }
 
@@ -215,6 +229,7 @@ export class LoginPage {
             if(data.status){
               this.currentUser = new User(data.data.name, data.data.email);
               this.storage.set('currentUser', this.currentUser);
+              this.authService.settoken(data.token);
               this.navCtrl.setRoot(HomePage);
             }
             this.loading.dismiss();

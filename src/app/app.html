@@ -8,12 +8,12 @@
   <ion-content>
     
     <img src="assets/images/bg.jpg"/>
-    
+    {{ auth.token }}
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
-      <button menuClose ion-item (click)="logout()">
+      <button menuClose ion-item (click)="logout()" *ngIf="auth.token != null">
         Logout
       </button>
     </ion-list>

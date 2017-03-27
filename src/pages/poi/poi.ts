@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams,ToastController, ActionSheetController, Platform, Loading, LoadingController } from 'ionic-angular';
 import { Geolocation, Camera, File, Transfer, FilePath } from 'ionic-native';
 import {DataFasilitas} from "../../providers/fasilitas";
-import {PoiMapPage} from "./poiMap";
+import {PoiMapPage, PinPointMapPage } from "./poiMap";
 import {HomePage} from "./../home/home";
 import { Storage } from '@ionic/storage';
 import { Auth } from '../../providers/auth';
@@ -55,6 +55,8 @@ export class PoiPage {
       Geolocation.getCurrentPosition().then((position) => {
         this.x = position.coords.longitude;
         this.y = position.coords.latitude;
+        this.data.x = this.x;
+        this.data.y = this.y;
         this.data.gpsinfo = "latitude :"+this.y+" longitude :"+this.x;
         
       }, (err) => {
@@ -72,10 +74,10 @@ export class PoiPage {
           nama:this.data.nama,
           nama_jalan:this.data.nama_jalan,
           fasilitas:this.data.fasilitas,
+          kondisi:this.data.kondisi,
           x:this.data.x,
           y:this.data.y,
           foto:this.data.foto
-          
      });
      console.log(data);
      this.dtfasilitas.InsertPostFasilitas(data).subscribe(data => {
@@ -217,6 +219,10 @@ export class PoiPage {
     //this.storage.set('datapoi', this.data);
     this.navCtrl.push(PoiMapPage,{data:this.data});
 
+  }
+
+  public getMapPin(){
+    this.navCtrl.push(PinPointMapPage,{data:this.data});
   }
 
   
